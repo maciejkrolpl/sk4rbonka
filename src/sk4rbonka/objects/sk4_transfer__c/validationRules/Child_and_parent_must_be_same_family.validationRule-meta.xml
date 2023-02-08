@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Child_and_parent_must_be_same_family</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (
+    RecordType.DeveloperName &lt;&gt; &apos;Cumulation&apos;,
+    sk4_child__r.sk4_family__c  &lt;&gt; sk4_parent__r.sk4_family__c
+)</errorConditionFormula>
+    <errorMessage>Child and parent must be from the same family!</errorMessage>
+</ValidationRule>

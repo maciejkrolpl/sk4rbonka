@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>sk4_cumulationDate__c</columns>
+    <columns>sk4_cumulationMonth__c</columns>
+    <columns>sk4_cumulationYear__c</columns>
+    <columns>sk4_family__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

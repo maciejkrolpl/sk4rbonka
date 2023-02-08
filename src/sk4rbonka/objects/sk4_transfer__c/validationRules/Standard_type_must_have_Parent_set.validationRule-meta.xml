@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Standard_type_must_have_Parent_set</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+     RecordType.Name = &apos;Standard&apos;,
+				ISBLANK(sk4_parent__c)
+)</errorConditionFormula>
+    <errorMessage>Standard Type Transfer must have Parent set.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cumulation_type_cannot_have_parent</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+     RecordType.Name = &apos;Cumulation&apos;,
+				!ISBLANK(sk4_parent__c)
+)</errorConditionFormula>
+    <errorMessage>Cumulation Type Transfer cannot have Parent set.</errorMessage>
+</ValidationRule>

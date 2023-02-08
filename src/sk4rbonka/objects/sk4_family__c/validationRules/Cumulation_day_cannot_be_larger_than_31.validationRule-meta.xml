@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cumulation_day_cannot_be_larger_than_31</fullName>
+    <active>true</active>
+    <errorConditionFormula>sk4_cumulationDay__c &gt; 31</errorConditionFormula>
+    <errorMessage>Cumulation day cannot be larger than 31!</errorMessage>
+</ValidationRule>

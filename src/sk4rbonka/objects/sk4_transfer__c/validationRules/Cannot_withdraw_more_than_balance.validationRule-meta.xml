@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_withdraw_more_than_balance</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISPICKVAL(sk4_type__c, &apos;Withdraw&apos;),
+ sk4_transferAmount__c &gt; 		 sk4_child__r.sk4_balance__c 			
+	)</errorConditionFormula>
+    <errorMessage>You cannot withdraw more than is on account!</errorMessage>
+</ValidationRule>

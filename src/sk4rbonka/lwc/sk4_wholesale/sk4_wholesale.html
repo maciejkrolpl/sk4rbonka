@@ -1,0 +1,36 @@
+<template>
+  <template if:true={children}>
+
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+      <thead>
+        <tr>
+          <th>Who</th>
+          <th>$ $ $</th>
+          <th>Give</th>
+          <th>Save</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template for:each={children} for:item="child">
+          <tr key={child.Id} class={child.Id}>
+            <td>{child.sk4_fullName__c}</td>
+            <td>{child.sk4_balance__c} zł</td>
+            <td><lightning-input type="number" name={child.sk4_fullName__c} variant="label-hidden" data-name={child.sk4_fullName__c}
+                data-input="give" value={child.give} onchange={handleChange} class="input-give"></lightning-input></td>
+            <td><lightning-input type="number" name={child.sk4_fullName__c} variant="label-hidden" data-name={child.sk4_fullName__c}
+                data-input="save" value={child.save} onchange={handleChange} class="input-save"></lightning-input></td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+    <lightning-button label="Default amount" variant="brand-outline" onclick={defaultAmount}></lightning-button>
+    <lightning-button label="Clear" variant="neutral" onclick={clearInputs}></lightning-button>
+    <lightning-button label="Continue" variant="brand" onclick={handleSave}></lightning-button>
+  </template>
+  <template if:true={error}>
+    <p>{error}</p>
+  </template>
+
+
+
+</template>
