@@ -42,6 +42,8 @@
 		<members>sk4_cumulation__c.sk4_family__c</members>
 		<members>sk4_family__c.sk4_cumulationDay__c</members>
 		<members>sk4_family__c.sk4_cumulationPercent__c</members>
+		<members>sk4_family__c.sk4_cumulationLowerTreshold__c </members>
+		<members>sk4_family__c.sk4_cumulationUpperTreshold__c </members>
 		<members>sk4_family__c.sk4_defaultPocketMoneyAmount__c</members>
 		<members>sk4_parent__c.sk4_family__c</members>
 		<members>sk4_parent__c.sk4_user__c</members>
@@ -125,6 +127,7 @@
 	</types>
 	<types>
 		<members>sk4_family__c.Cumulation_day_cannot_be_larger_than_31</members>
+		<members>sk4_family__c.Lower_treshold_lower_than_upper</members>
 		<members>sk4_transfer__c.Cannot_withdraw_more_than_balance</members>
 		<members>sk4_transfer__c.Child_and_parent_must_be_same_family</members>
 		<members>sk4_transfer__c.Cumulation_type_cannot_have_parent</members>

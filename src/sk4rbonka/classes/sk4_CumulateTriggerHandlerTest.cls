@@ -27,6 +27,66 @@ public with sharing class sk4_CumulateTriggerHandlerTest {
     }
 
     @IsTest
+    static void testCreateCumulationTransfersWithTresholds() {
+        User user = [SELECT Id FROM User WHERE LastName = :USER_NAME LIMIT 1];
+        sk4_family__c family = [SELECT Id FROM sk4_family__c WHERE sk4_cumulationPercent__c != NULL];
+        family.sk4_cumulationLowerTreshold__c = 10;
+        family.sk4_cumulationUpperTreshold__c = 20;
+        update family;
+
+        sk4_parent__c parent = [SELECT Id FROM sk4_parent__c WHERE sk4_family__c = :family.Id];
+        List<sk4_child__c> children = [SELECT Id FROM sk4_child__c];
+
+        sk4_transfer__c t1 = sk4_TestDataFactory.createStandardTransfer(
+            SAVINGS_TRANSFER_TYPE, 
+            20, 
+            children[0].Id,
+            parent.Id
+        );
+
+        sk4_transfer__c t2 = sk4_TestDataFactory.createStandardTransfer(
+            SAVINGS_TRANSFER_TYPE, 
+            40, 
+            children[0].Id,
+            parent.Id
+        );
+
+        sk4_transfer__c t3 = sk4_TestDataFactory.createStandardTransfer(
+            SAVINGS_TRANSFER_TYPE, 
+            15, 
+            children[1].Id,
+            parent.Id
+        );
+
+        insert new List<sk4_transfer__c>{t1,t2,t3};
+
+        System.runAs(user) {
+            Test.startTest();
+            insert sk4_TestDataFactory.createCumulation(Date.today(), family.Id);
+            Test.stopTest();
+
+            List<sk4_transfer__c> transfers0 = [
+                SELECT Id, sk4_transferAmount__c
+                FROM sk4_transfer__c
+                WHERE RecordTypeId = :CUMULATION_TRANSFER_RT_ID
+                AND sk4_child__c = :children[0].Id
+            ];
+
+            List<sk4_transfer__c> transfers1 = [
+                SELECT Id, sk4_transferAmount__c
+                FROM sk4_transfer__c
+                WHERE RecordTypeId = :CUMULATION_TRANSFER_RT_ID
+                AND sk4_child__c = :children[1].Id
+            ];
+
+            Assert.areEqual(1, transfers0.size());
+            Assert.areEqual(20, transfers0[0].sk4_transferAmount__c);
+            Assert.areEqual(1, transfers1.size());
+            Assert.areEqual(10, transfers1[0].sk4_transferAmount__c);
+        }
+    }
+
+    @IsTest
     static void testCreateCumulationTransfers() {
         User user = [SELECT Id FROM User WHERE LastName = :USER_NAME LIMIT 1];
         sk4_family__c family = [SELECT Id FROM sk4_family__c WHERE sk4_cumulationPercent__c != NULL];

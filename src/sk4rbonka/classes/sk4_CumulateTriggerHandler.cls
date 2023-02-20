@@ -41,7 +41,13 @@ public with sharing class sk4_CumulateTriggerHandler {
         }
 
         List<sk4_child__c> children = [
-            SELECT Id, sk4_balance__c, sk4_family__r.sk4_cumulationPercent__c, sk4_family__c
+            SELECT 
+                Id, 
+                sk4_balance__c, 
+                sk4_family__r.sk4_cumulationPercent__c, 
+                sk4_family__r.sk4_cumulationUpperTreshold__c , 
+                sk4_family__r.sk4_cumulationLowerTreshold__c , 
+                sk4_family__c
             FROM sk4_child__c
             WHERE sk4_family__c IN :familyToCumulation.keySet()
         ];
@@ -50,7 +56,7 @@ public with sharing class sk4_CumulateTriggerHandler {
             sk4_CreateTransferRecords.Parameters p = new sk4_CreateTransferRecords.Parameters();
             p.type = sk4_Const.TRANSFER_TYPE_CUMULATION;
             p.childId = child.Id;
-            p.transferAmount = child.sk4_balance__c * child.sk4_family__r.sk4_cumulationPercent__c / 100;
+            p.transferAmount = getCumulationAmount(child);
             p.cumulationId = familyToCumulation.get(child.sk4_family__c).Id;
             sk4_transfer__c transfer = sk4_CreateTransferRecords.createTransfer(p);
             transfers.add(transfer);
@@ -58,6 +64,17 @@ public with sharing class sk4_CumulateTriggerHandler {
 
         insert transfers;
 
+    }
+
+    private static Decimal getCumulationAmount(sk4_child__c child) {
+        Decimal transferAmount = child.sk4_balance__c * child.sk4_family__r.sk4_cumulationPercent__c / 100;
+        if (child.sk4_family__r.sk4_cumulationLowerTreshold__c != NULL) {
+            transferAmount = Math.max(transferAmount, child.sk4_family__r.sk4_cumulationLowerTreshold__c);
+        }
+        if (child.sk4_family__r.sk4_cumulationUpperTreshold__c != NULL) {
+            transferAmount = Math.min(transferAmount, child.sk4_family__r.sk4_cumulationUpperTreshold__c);
+        }
+        return transferAmount;
     }
 
     private static void checkIsCumulationInCurrentMonth(List<sk4_cumulation__c> cumulations) {

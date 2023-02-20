@@ -40,6 +40,7 @@
         </inputParameters>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
+    <description>Other transfer</description>
     <environments>Default</environments>
     <interviewLabel>Sk4rbonka - Give PocketMoney {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Sk4rbonka - Give PocketMoney</label>
@@ -209,7 +210,7 @@
             <targetReference>Get_Child</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Display_Error</name>
         <label>Display Error</label>
