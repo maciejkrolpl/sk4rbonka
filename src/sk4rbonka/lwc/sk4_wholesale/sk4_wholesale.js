@@ -19,6 +19,7 @@ export default class Sk4_wholesale extends LightningElement {
     getAllChildren()
       .then(children => {
         this.children = children.map(child => ({ ...child, give: 0, save: 0 }));
+        console.log( JSON.parse(JSON.stringify(this.children)) )
       })
       .catch(error => this.error = error);
   }
@@ -28,12 +29,13 @@ export default class Sk4_wholesale extends LightningElement {
     const input = event.target.dataset.input;
     const name = event.target.dataset.name;
     const children = this.children.map(child => {
-      if (child.sk4_fullName__c === name) {
+      if (child.fullName === name) {
         child[input] = +amount;
       }
       return child;
     })
     this.children = children;
+    
   }
 
   popUpEvent(variant, message) {
@@ -59,6 +61,7 @@ export default class Sk4_wholesale extends LightningElement {
   }
 
   handleSave() {
+    console.log( JSON.parse(JSON.stringify(this.children)) )
     if (!this.checkValidity()) {
       return;
     }
@@ -84,7 +87,7 @@ export default class Sk4_wholesale extends LightningElement {
   checkValidity() {
     let isValid = true;
     this.children.forEach(child => {
-      const input = this.template.querySelector(`.${child.Id} .input-save`);
+      const input = this.template.querySelector(`.${child.id} .input-save`);
       if (child.save > child.give) {
         input.setCustomValidity(' ');
         this.popUpEvent('error', 'Cannot save more than is paid')
@@ -101,8 +104,8 @@ export default class Sk4_wholesale extends LightningElement {
 
   defaultAmount() {
     this.children.forEach(child => {
-      if (child.sk4_family__r.sk4_defaultPocketMoneyAmount__c) {
-        child.give = +child.sk4_family__r.sk4_defaultPocketMoneyAmount__c;
+      if (child.defaultAmount) {
+        child.give = +child.defaultAmount;
       }
     })
   }

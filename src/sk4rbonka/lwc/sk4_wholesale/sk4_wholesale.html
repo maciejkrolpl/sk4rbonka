@@ -12,12 +12,12 @@
       </thead>
       <tbody>
         <template for:each={children} for:item="child">
-          <tr key={child.Id} class={child.Id}>
-            <td>{child.sk4_fullName__c}</td>
-            <td>{child.sk4_balance__c} zł</td>
-            <td><lightning-input type="number" name={child.sk4_fullName__c} variant="label-hidden" data-name={child.sk4_fullName__c}
+          <tr key={child.id} class={child.id}>
+            <td>{child.fullName}</td>
+            <td>{child.balance} zł</td>
+            <td><lightning-input type="number" name={child.fullName} variant="label-hidden" data-name={child.fullName}
                 data-input="give" value={child.give} onchange={handleChange} class="input-give"></lightning-input></td>
-            <td><lightning-input type="number" name={child.sk4_fullName__c} variant="label-hidden" data-name={child.sk4_fullName__c}
+            <td><lightning-input type="number" name={child.fullName} variant="label-hidden" data-name={child.fullName}
                 data-input="save" value={child.save} onchange={handleChange} class="input-save"></lightning-input></td>
           </tr>
         </template>

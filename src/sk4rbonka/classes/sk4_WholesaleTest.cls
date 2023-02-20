@@ -32,7 +32,7 @@ public with sharing class sk4_WholesaleTest {
 
         System.runAs(u) {
             Test.startTest();
-            List<sk4_child__c> children = sk4_Wholesale.getAllChildren();
+            List<sk4_Wholesale.ChildWrapper> children = sk4_Wholesale.getAllChildren();
             Test.stopTest();
 
             Assert.areEqual(9, children.size());
@@ -57,7 +57,7 @@ public with sharing class sk4_WholesaleTest {
 
         System.runAs(u) {
             Test.startTest();
-            List<sk4_child__c> children = sk4_Wholesale.getAllChildren();
+            List<sk4_Wholesale.ChildWrapper> children = sk4_Wholesale.getAllChildren();
             Test.stopTest();
 
             Assert.areEqual(4, children.size());
@@ -81,7 +81,7 @@ public with sharing class sk4_WholesaleTest {
         insert share;
 
         System.runAs(u) {
-            List<sk4_child__c> children = sk4_Wholesale.getAllChildren();
+            List<sk4_Wholesale.ChildWrapper> children = sk4_Wholesale.getAllChildren();
 
             List<sk4_Wholesale.ChildWrapper> wrappers = new List<sk4_Wholesale.ChildWrapper>();
 

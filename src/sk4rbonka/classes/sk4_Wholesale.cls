@@ -1,12 +1,24 @@
 public with sharing class sk4_Wholesale {
     @AuraEnabled
-    public static List<sk4_child__c> getAllChildren() {
-        List<sk4_child__c> children = [
-            SELECT Id, sk4_fullName__c, sk4_balance__c, sk4_family__r.sk4_defaultPocketMoneyAmount__c
+    public static List<ChildWrapper> getAllChildren() {
+        List<ChildWrapper> wrappers = new List<ChildWrapper>();
+        for (sk4_child__c child : [
+                SELECT 
+                    Id, 
+                    sk4_fullName__c, 
+                    sk4_balance__c, 
+                    sk4_family__r.sk4_defaultPocketMoneyAmount__c
             FROM sk4_child__c
-        ];
+        ]) {
+            ChildWrapper cw = new ChildWrapper();
+            cw.fullName = child.sk4_fullName__c;
+            cw.balance = child.sk4_balance__c;
+            cw.defaultAmount = child.sk4_family__r.sk4_defaultPocketMoneyAmount__c;
+            cw.id = child.Id;
+            wrappers.add(cw);
+        }
 
-        return children;
+        return wrappers;
     }
 
     @AuraEnabled
@@ -42,12 +54,16 @@ public with sharing class sk4_Wholesale {
     public class ChildWrapper {
         @AuraEnabled
         public Id id { get; set; }
-
         @AuraEnabled
         public Decimal give { get; set; }
-
         @AuraEnabled
         public Decimal save { get; set; }
+        @AuraEnabled
+        public String fullName {get; set;} 
+        @AuraEnabled
+        public Decimal balance {get;set;}
+        @AuraEnabled
+        public Decimal defaultAmount{get;set;}
 
     }
 
