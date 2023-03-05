@@ -8,10 +8,6 @@
     },
     "mobileSettings": {
       "enableS1EncryptedStoragePref2": false
-    },
-    "orgPreferenceSettings": {
-      "selfSetPasswordInApi": true
     }
-    
   }
 }

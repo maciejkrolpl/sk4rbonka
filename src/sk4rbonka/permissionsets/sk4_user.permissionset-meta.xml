@@ -8,10 +8,6 @@
         <apexClass>sk4_Wholesale</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>true</enabled>
-        <name>sk4_settings__mdt</name>
-    </customMetadataTypeAccesses>
     <fieldPermissions>
         <editable>false</editable>
         <field>sk4_child__c.sk4_balance__c</field>
