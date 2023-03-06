@@ -39,6 +39,7 @@ $RECYCLE.BIN/
 # Local environment variables
 .env
 .data/
+data/
 .husky/
 .sf
 .sfdx

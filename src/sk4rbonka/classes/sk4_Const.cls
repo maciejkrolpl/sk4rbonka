@@ -5,6 +5,7 @@ public with sharing class sk4_Const {
     public final static String TRANSFER_TYPE_WITHDRAW = 'Withdraw';
     public final static String TRANSFER_TYPE_CUMULATION = 'Cumulation';
     public final static String TRANSFER_TYPE_OTHER = 'Other';
+    public final static String TRANSFER_TYPE_DEDUCTION = 'Deduction';
 
     public final static String TRANSFER_RECORDTYPE_CUMULATION = 'Cumulation';
     public final static String TRANSFER_RECORDTYPE_STANDARD = 'Standard';
@@ -18,6 +19,7 @@ public with sharing class sk4_Const {
         TRANSFER_TYPE_POCKETMONEY => STANDARD_RT_ID,
         TRANSFER_TYPE_WITHDRAW => STANDARD_RT_ID,
         TRANSFER_TYPE_OTHER => STANDARD_RT_ID,
+        TRANSFER_TYPE_DEDUCTION => STANDARD_RT_ID,
         TRANSFER_TYPE_CUMULATION => CUMULATION_RT_ID
     };
 }

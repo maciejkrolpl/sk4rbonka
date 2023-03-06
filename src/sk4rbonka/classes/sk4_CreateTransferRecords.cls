@@ -11,6 +11,8 @@ public with sharing class sk4_CreateTransferRecords {
         public Decimal savingsAmount;
         @InvocableVariable(label='Withdraw Amount')
         public Decimal withdrawAmount;
+        @InvocableVariable(label='Deduction Amount')
+        public Decimal deductionAmount;
         @InvocableVariable(label='Other Amount')
         public Decimal otherAmount;
         @InvocableVariable(label='Description')
@@ -65,6 +67,9 @@ public with sharing class sk4_CreateTransferRecords {
             if (input.otherAmount != NULL && input.otherAmount > 0) {
                 transfers.add(createOtherTransfer(input));
             }
+            if (input.deductionAmount != NULL && input.deductionAmount > 0) {
+                transfers.add(createDeductionTransfer(input));
+            }
         }
 
         insertRecords(transfers);
@@ -116,6 +121,13 @@ public with sharing class sk4_CreateTransferRecords {
         Parameters p = new Parameters(input);
         p.transferAmount = input.savingsAmount;
         p.type = sk4_Const.TRANSFER_TYPE_SAVINGS;
+        return createTransfer(p);
+    }
+    
+    private static sk4_Transfer__c createDeductionTransfer(FlowInput input) {
+        Parameters p = new Parameters(input);
+        p.transferAmount = input.deductionAmount;
+        p.type = sk4_Const.TRANSFER_TYPE_DEDUCTION;
         return createTransfer(p);
     }
 

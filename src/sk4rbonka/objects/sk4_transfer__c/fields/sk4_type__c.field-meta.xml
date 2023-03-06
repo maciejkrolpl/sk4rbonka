@@ -35,6 +35,11 @@
                 <default>false</default>
                 <label>Other</label>
             </value>
+            <value>
+                <fullName>Deduction</fullName>
+                <default>false</default>
+                <label>Deduction</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Withdrawal_from_savings_apex</name>
-        <label>Withdrawal from savings apex</label>
+        <name>Deduct_from_savings_apex</name>
+        <label>Deduct from savings apex</label>
         <locationX>176</locationX>
         <locationY>854</locationY>
         <actionName>sk4_CreateTransferRecords</actionName>
@@ -18,6 +18,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>deductionAmount</name>
+            <value>
+                <elementReference>Deduction_amount</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>description</name>
             <value>
                 <elementReference>Description</elementReference>
@@ -29,35 +35,29 @@
                 <elementReference>Get_Parent</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>withdrawAmount</name>
-            <value>
-                <elementReference>Withdraw_amount</elementReference>
-            </value>
-        </inputParameters>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
     <decisions>
-        <name>Is_withdrawal_more_than_savings</name>
-        <label>Is withdrawal more than savings?</label>
+        <name>Is_deduction_more_than_savings</name>
+        <label>Is deduction more than savings</label>
         <locationX>176</locationX>
         <locationY>518</locationY>
         <defaultConnector>
-            <targetReference>Confirmation_screen</targetReference>
+            <targetReference>Confirmation</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Yes, confirm</defaultConnectorLabel>
         <rules>
             <name>No_proceed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_child.sk4_savingsSum__c</leftValueReference>
-                <operator>GreaterThanOrEqualTo</operator>
+                <leftValueReference>Deduction_amount</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <elementReference>Withdraw_amount</elementReference>
+                    <elementReference>Get_child.sk4_balance__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Withdrawal_from_savings_apex</targetReference>
+                <targetReference>Deduct_from_savings_apex</targetReference>
             </connector>
             <label>No, proceed</label>
         </rules>
@@ -69,7 +69,7 @@
         <expression>{!Get_child.Name} + &apos; has no savings that could be withdrawn!&apos;</expression>
     </formulas>
     <interviewLabel>Sk4rbonka - Withdraw from savings {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Sk4rbonka - Withdraw from savings</label>
+    <label>Sk4rbonka - Deduct from savings</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -117,7 +117,7 @@
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Withdraw_from_savings</targetReference>
+            <targetReference>Deduct_from_savings</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -132,40 +132,40 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
-        <name>Confirmation_screen</name>
-        <label>Confirmation_screen</label>
+        <name>Confirmation</name>
+        <label>Confirmation</label>
         <locationX>264</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <backButtonLabel>Make a correction</backButtonLabel>
         <connector>
-            <targetReference>Withdrawal_from_savings_apex</targetReference>
+            <targetReference>Deduct_from_savings_apex</targetReference>
         </connector>
         <fields>
-            <name>Withdrawal_confirmation</name>
-            <fieldText>&lt;p&gt;{!Get_child.Name} is going to withdraw {!Withdraw_amount}, it,s more, than has saved. Proceed?&lt;/p&gt;</fieldText>
+            <name>Confirmation_text</name>
+            <fieldText>&lt;p&gt;You&apos;re going to deduct {!Deduction_amount}. It&apos;s more than {!Get_child.Name} has saved. Are you sure?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Proceed</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Yes, deduct</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Withdraw_from_savings</name>
-        <label>Withdraw from savings</label>
+        <name>Deduct_from_savings</name>
+        <label>Deduct from savings</label>
         <locationX>176</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Is_withdrawal_more_than_savings</targetReference>
+            <targetReference>Is_deduction_more_than_savings</targetReference>
         </connector>
         <fields>
             <name>Title</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;{!Get_child.Name} &lt;/span&gt;&lt;span style=&quot;font-size: 20px; color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;withdraws their &lt;/span&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;savings!&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;Deduct from {!Get_child.Name} savings!&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -174,16 +174,19 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Withdraw_amount</name>
+            <name>Deduction_amount</name>
             <dataType>Currency</dataType>
-            <fieldText>Withdraw amount</fieldText>
+            <fieldText>Deduction amount</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
             <scale>0</scale>
         </fields>
         <fields>
             <name>Description</name>
-            <fieldType>DisplayText</fieldType>
+            <dataType>String</dataType>
+            <fieldText>Description</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
         </fields>
         <nextOrFinishButtonLabel>Pay!</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
