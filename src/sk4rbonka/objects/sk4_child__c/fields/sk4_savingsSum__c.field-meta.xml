@@ -7,7 +7,7 @@
     <summaryFilterItems>
         <field>sk4_transfer__c.sk4_type__c</field>
         <operation>equals</operation>
-        <value>Savings, Cumulation</value>
+        <value>Savings, Cumulation, Other</value>
     </summaryFilterItems>
     <summaryForeignKey>sk4_transfer__c.sk4_child__c</summaryForeignKey>
     <summaryOperation>sum</summaryOperation>
