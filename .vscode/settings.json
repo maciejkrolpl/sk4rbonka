@@ -4,5 +4,25 @@
     "**/bower_components": true,
     "**/.sfdx": true
   },
-  "salesforcedx-vscode-core.show-cli-success-msg": false
+  "salesforcedx-vscode-core.show-cli-success-msg": false,
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#680e68",
+    "activityBar.background": "#680e68",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#70700f",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#680e68",
+    "statusBar.background": "#3b083b",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#680e68",
+    "statusBarItem.remoteBackground": "#3b083b",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#3b083b",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#3b083b99",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#3b083b"
 }

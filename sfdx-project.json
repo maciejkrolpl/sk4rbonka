@@ -15,7 +15,7 @@
   "sourceApiVersion": "56.0",
   "plugins": {
     "sfdx-plugin-prettier": {
-      "enabled": false
+      "enabled": true
     }
   }
 }
