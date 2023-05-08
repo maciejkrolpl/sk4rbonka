@@ -20,7 +20,7 @@
         <inputParameters>
             <name>description</name>
             <value>
-                <elementReference>Description</elementReference>
+                <elementReference>Description_Input</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -182,8 +182,10 @@
             <scale>0</scale>
         </fields>
         <fields>
-            <name>Description</name>
-            <fieldType>DisplayText</fieldType>
+            <name>Description_Input</name>
+            <fieldText>Description</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
         </fields>
         <nextOrFinishButtonLabel>Pay!</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -196,7 +198,7 @@
             <targetReference>Get_child</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Display_Error</name>
         <label>Display Error</label>
