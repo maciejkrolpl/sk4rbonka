@@ -10,6 +10,17 @@ public with sharing class sk4_Const {
     public final static String TRANSFER_RECORDTYPE_CUMULATION = 'Cumulation';
     public final static String TRANSFER_RECORDTYPE_STANDARD = 'Standard';
 
+    public final static List<String> PLUS_TRANSFERS = new List<String>{
+        TRANSFER_TYPE_SAVINGS,
+        TRANSFER_RECORDTYPE_CUMULATION,
+        TRANSFER_TYPE_OTHER
+    };
+
+    public final static List<String> MINUS_TRANSFERS = new List<String>{
+        TRANSFER_TYPE_DEDUCTION,
+        TRANSFER_TYPE_WITHDRAW
+    };
+
     private static final Map<String,Schema.RecordTypeInfo> recordTypes = Schema.SObjectType.sk4_Transfer__c.getRecordTypeInfosByDeveloperName();
     private static final ID STANDARD_RT_ID = recordTypes.get(TRANSFER_RECORDTYPE_STANDARD).getRecordTypeId();
     private static final ID CUMULATION_RT_ID = recordTypes.get(TRANSFER_RECORDTYPE_CUMULATION).getRecordTypeId();
