@@ -1,4 +1,4 @@
-import { LightningElement, wire, api } from 'lwc';
+import { LightningElement, wire, api, track } from 'lwc';
 import getTransfersByChildren from '@salesforce/apex/sk4_TransferController.getTransfersByChildren';
 import getMinusTypes from '@salesforce/apex/sk4_TransferController.getMinusTypes';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -13,25 +13,37 @@ export default class Sk4_history extends LightningElement {
   ];
 
   @api recordId;
-  @wire(getMinusTypes) minusTypes;
-  @wire(getTransfersByChildren, { childId: '$recordId' }) wireResult;
-  get transfers() {
-      if (!this.minusTypes) {
-      return null;
+  @track transfers;
+  @track minusTypes;
+
+  displayErrorToast(message) {
+    const toast = new ShowToastEvent({
+      title: 'Error',
+      variant: 'error',
+      message
+    });
+    this.dispatchEvent(toast);
+  }
+
+
+  @wire(getMinusTypes) wireMinusTypes({ error, data }) {
+    if (data) {
+      this.minusTypes = data;
+    } else if (error) {
+      this.minusTypes = undefined;
+      this.displayErrorToast(error.body.message);
     }
-    if (this.wireResult.error) {
-      const toast = new ShowToastEvent({
-        title: 'Error',
-        variant: 'error',
-        message: this.wireResult.error.body.message
-      });
-      this.dispatchEvent(toast);
-      return null;
+  }
+
+  @wire(getTransfersByChildren, { childId: '$recordId' }) wireTransfers({ error, data }) {
+    if (data) {
+      this.transfers = data?.map(item => ({
+        ...item,
+        color: (this.minusTypes.includes(item.type)) ? 'slds-text-color_error' : ''
+      }));
+    } else if (error) {
+      this.transfers = undefined;
+      this.displayErrorToast(error.body.message);
     }
-    
-    return this.wireResult.data?.map(item => ({
-      ...item,
-      color: (this.minusTypes.data.includes(item.type)) ? 'slds-text-color_error' : ''
-    }));
   }
 }
