@@ -1,25 +1,29 @@
 public with sharing class sk4_TestDataFactory {
-
     private static Id STANDARD_TRANSFER_RT_ID = Schema.SObjectType.sk4_transfer__c.getRecordTypeInfosByName()
-        .get('Standard').getRecordTypeId();
-    
+        .get('Standard')
+        .getRecordTypeId();
+
     public static User createSk4rbonkaAdminUser(String lastName) {
-        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User']; 
+        Profile p = [SELECT Id FROM Profile WHERE Name = 'Standard User'];
         User u = new User(
-            Alias = 'tst', 
-            Email='test@sk4rbon.ka', 
-            EmailEncodingKey='UTF-8', 
-            LastName=lastName, 
-            LanguageLocaleKey='en_US', 
-            LocaleSidKey='en_US', 
-            ProfileId = p.Id, 
-            TimeZoneSidKey='America/Los_Angeles', 
-            UserName='test@sk4rbon.ka'
+            Alias = 'tst',
+            Email = 'test@sk4rbon.ka',
+            EmailEncodingKey = 'UTF-8',
+            LastName = lastName,
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US',
+            ProfileId = p.Id,
+            TimeZoneSidKey = 'America/Los_Angeles',
+            UserName = 'test@sk4rbon.ka'
         );
         insert u;
-        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'sk4_admin'];
+        PermissionSet ps = [
+            SELECT Id
+            FROM PermissionSet
+            WHERE Name = 'sk4_admin'
+        ];
 
-        System.runAs(u){
+        System.runAs(u) {
             insert new PermissionSetAssignment(
                 AssigneeId = u.Id,
                 PermissionSetId = ps.Id
@@ -29,22 +33,26 @@ public with sharing class sk4_TestDataFactory {
         return u;
     }
     public static User createSk4rbonkaUser(String lastName) {
-        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User']; 
+        Profile p = [SELECT Id FROM Profile WHERE Name = 'Standard User'];
         User u = new User(
-            Alias = 'tst', 
-            Email='testuser@sk4rbon.ka', 
-            EmailEncodingKey='UTF-8', 
-            LastName=lastName, 
-            LanguageLocaleKey='en_US', 
-            LocaleSidKey='en_US', 
-            ProfileId = p.Id, 
-            TimeZoneSidKey='America/Los_Angeles', 
-            UserName='testuser@sk4rbon.ka'
+            Alias = 'tst',
+            Email = 'testuser@sk4rbon.ka',
+            EmailEncodingKey = 'UTF-8',
+            LastName = lastName,
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US',
+            ProfileId = p.Id,
+            TimeZoneSidKey = 'America/Los_Angeles',
+            UserName = 'testuser@sk4rbon.ka'
         );
         insert u;
-        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'sk4_user'];
+        PermissionSet ps = [
+            SELECT Id
+            FROM PermissionSet
+            WHERE Name = 'sk4_user'
+        ];
 
-        System.runAs(u){
+        System.runAs(u) {
             insert new PermissionSetAssignment(
                 AssigneeId = u.Id,
                 PermissionSetId = ps.Id
@@ -54,7 +62,10 @@ public with sharing class sk4_TestDataFactory {
         return u;
     }
 
-    public static List<sk4_family__c> createFamilies(String namePrefix, Integer size) {
+    public static List<sk4_family__c> createFamilies(
+        String namePrefix,
+        Integer size
+    ) {
         List<sk4_family__c> families = new List<sk4_family__c>();
         for (Integer i = 1; i <= size; i++) {
             sk4_family__c family = new sk4_family__c();
@@ -63,10 +74,13 @@ public with sharing class sk4_TestDataFactory {
         }
 
         return families;
-
     }
 
-    public static List<sk4_child__c> createChildren(String namePrefix, Integer size, Id familyId) {
+    public static List<sk4_child__c> createChildren(
+        String namePrefix,
+        Integer size,
+        Id familyId
+    ) {
         List<sk4_child__c> children = new List<sk4_child__c>();
         for (Integer i = 1; i <= size; i++) {
             sk4_child__c child = new sk4_child__c();
@@ -84,7 +98,12 @@ public with sharing class sk4_TestDataFactory {
         return parent;
     }
 
-    public static sk4_transfer__c createStandardTransfer(String type, Decimal amount, Id childId, Id parentId) {
+    public static sk4_transfer__c createStandardTransfer(
+        String type,
+        Decimal amount,
+        Id childId,
+        Id parentId
+    ) {
         sk4_transfer__c transfer = new sk4_transfer__c();
         transfer.sk4_type__c = type;
         transfer.sk4_transferAmount__c = amount;
@@ -93,7 +112,10 @@ public with sharing class sk4_TestDataFactory {
         return transfer;
     }
 
-    public static sk4_cumulation__c createCumulation(Date cumulationDate, Id familyId) {
+    public static sk4_cumulation__c createCumulation(
+        Date cumulationDate,
+        Id familyId
+    ) {
         sk4_cumulation__c cumulation = new sk4_cumulation__c();
         cumulation.sk4_cumulationDate__c = cumulationDate;
         cumulation.sk4_family__c = familyId;
