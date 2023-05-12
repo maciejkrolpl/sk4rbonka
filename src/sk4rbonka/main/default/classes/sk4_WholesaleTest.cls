@@ -11,24 +11,40 @@ public with sharing class sk4_WholesaleTest {
         User u = sk4_TestDataFactory.createSk4rbonkaAdminUser(ADMIN_NAME);
         User uu = sk4_TestDataFactory.createSk4rbonkaUser(USER_NAME);
 
-        List<sk4_family__c> families = sk4_TestDataFactory.createFamilies(FAMILY_NAME, 2);
+        List<sk4_family__c> families = sk4_TestDataFactory.createFamilies(
+            FAMILY_NAME,
+            2
+        );
         insert families;
 
-        List<sk4_child__c> children0 = sk4_TestDataFactory.createChildren(CHILD0_NAME, 4, families[0].Id);
-        List<sk4_child__c> children1 = sk4_TestDataFactory.createChildren(CHILD1_NAME, 5, families[1].Id);
+        List<sk4_child__c> children0 = sk4_TestDataFactory.createChildren(
+            CHILD0_NAME,
+            4,
+            families[0].Id
+        );
+        List<sk4_child__c> children1 = sk4_TestDataFactory.createChildren(
+            CHILD1_NAME,
+            5,
+            families[1].Id
+        );
         insert children0;
         insert children1;
 
-        sk4_parent__c parent = sk4_TestDataFactory.createParent(PARENT_NAME, families[0].Id);
+        sk4_parent__c parent = sk4_TestDataFactory.createParent(
+            PARENT_NAME,
+            families[0].Id
+        );
         parent.sk4_user__c = uu.Id;
         insert parent;
     }
 
     @IsTest
     static void testGetChildren() {
-        User u = [SELECT Id
-                  FROM User
-                  WHERE LastName = :ADMIN_NAME];
+        User u = [
+            SELECT Id
+            FROM User
+            WHERE LastName = :ADMIN_NAME
+        ];
 
         System.runAs(u) {
             Test.startTest();
@@ -41,13 +57,17 @@ public with sharing class sk4_WholesaleTest {
 
     @IsTest
     static void testGetChildrenForStdUser() {
-        User u = [SELECT Id
-                  FROM User
-                  WHERE LastName = :USER_NAME];
+        User u = [
+            SELECT Id
+            FROM User
+            WHERE LastName = :USER_NAME
+        ];
 
-        sk4_family__c family = [SELECT Id
-                                FROM sk4_family__c
-                                WHERE Name = :FAMILY_NAME + '1'];
+        sk4_family__c family = [
+            SELECT Id
+            FROM sk4_family__c
+            WHERE Name = :FAMILY_NAME + '1'
+        ];
         sk4_family__Share share = new sk4_family__Share();
         share.ParentId = family.Id;
         share.UserOrGroupId = u.Id;
@@ -66,13 +86,17 @@ public with sharing class sk4_WholesaleTest {
 
     @IsTest
     static void testCreateTransfersForStdUser() {
-        User u = [SELECT Id
-                  FROM User
-                  WHERE LastName = :USER_NAME];
+        User u = [
+            SELECT Id
+            FROM User
+            WHERE LastName = :USER_NAME
+        ];
 
-        sk4_family__c family = [SELECT Id
-                                FROM sk4_family__c
-                                WHERE Name = :FAMILY_NAME + '1'];
+        sk4_family__c family = [
+            SELECT Id
+            FROM sk4_family__c
+            WHERE Name = :FAMILY_NAME + '1'
+        ];
         sk4_family__Share share = new sk4_family__Share();
         share.ParentId = family.Id;
         share.UserOrGroupId = u.Id;
@@ -104,14 +128,14 @@ public with sharing class sk4_WholesaleTest {
             w3.give = 50;
 
             Test.startTest();
-            sk4_Wholesale.saveNewTransfers(new List<sk4_Wholesale.ChildWrapper>{w0,w1,w2,w3});
+            sk4_Wholesale.saveNewTransfers(
+                new List<sk4_Wholesale.ChildWrapper>{ w0, w1, w2, w3 }
+            );
             Test.stopTest();
 
             List<sk4_transfer__c> transfers = [SELECT Id FROM sk4_transfer__c];
 
             Assert.areEqual(6, transfers.size());
-
         }
     }
-
 }

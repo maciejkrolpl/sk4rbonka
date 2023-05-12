@@ -3,11 +3,11 @@ public with sharing class sk4_Wholesale {
     public static List<ChildWrapper> getAllChildren() {
         List<ChildWrapper> wrappers = new List<ChildWrapper>();
         for (sk4_child__c child : [
-                SELECT 
-                    Id, 
-                    sk4_fullName__c, 
-                    sk4_balance__c, 
-                    sk4_family__r.sk4_defaultPocketMoneyAmount__c
+            SELECT
+                Id,
+                sk4_fullName__c,
+                sk4_balance__c,
+                sk4_family__r.sk4_defaultPocketMoneyAmount__c
             FROM sk4_child__c
         ]) {
             ChildWrapper cw = new ChildWrapper();
@@ -23,14 +23,16 @@ public with sharing class sk4_Wholesale {
 
     @AuraEnabled
     public static void saveNewTransfers(List<ChildWrapper> children) {
-        sk4_parent__c parent = [SELECT Id
-                                FROM sk4_parent__c
-                                WHERE sk4_user__c = :UserInfo.getUserId()];
+        sk4_parent__c parent = [
+            SELECT Id
+            FROM sk4_parent__c
+            WHERE sk4_user__c = :UserInfo.getUserId()
+        ];
 
         List<sk4_transfer__c> transfers = new List<sk4_transfer__c>();
 
         for (ChildWrapper child : children) {
-            if (child.give != NULL && child.give > 0) {
+            if (child.give != null && child.give > 0) {
                 sk4_CreateTransferRecords.Parameters p = new sk4_CreateTransferRecords.Parameters();
                 p.type = sk4_Const.TRANSFER_TYPE_POCKETMONEY;
                 p.parentId = parent.Id;
@@ -38,7 +40,7 @@ public with sharing class sk4_Wholesale {
                 p.transferAmount = child.give;
                 transfers.add(sk4_CreateTransferRecords.createTransfer(p));
             }
-            if (child.save != NULL && child.save > 0) {
+            if (child.save != null && child.save > 0) {
                 sk4_CreateTransferRecords.Parameters p = new sk4_CreateTransferRecords.Parameters();
                 p.type = sk4_Const.TRANSFER_TYPE_SAVINGS;
                 p.parentId = parent.Id;
@@ -59,12 +61,10 @@ public with sharing class sk4_Wholesale {
         @AuraEnabled
         public Decimal save { get; set; }
         @AuraEnabled
-        public String fullName {get; set;} 
+        public String fullName { get; set; }
         @AuraEnabled
-        public Decimal balance {get;set;}
+        public Decimal balance { get; set; }
         @AuraEnabled
-        public Decimal defaultAmount{get;set;}
-
+        public Decimal defaultAmount { get; set; }
     }
-
 }

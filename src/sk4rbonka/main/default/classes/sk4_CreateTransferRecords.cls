@@ -1,5 +1,4 @@
 public with sharing class sk4_CreateTransferRecords {
-
     public class FlowInput {
         @InvocableVariable(label='Child' required=true)
         public sk4_child__c child;
@@ -19,7 +18,8 @@ public with sharing class sk4_CreateTransferRecords {
         public String description;
     }
 
-    public class TransferException extends Exception {}
+    public class TransferException extends Exception {
+    }
 
     public class Parameters {
         public String type;
@@ -37,71 +37,91 @@ public with sharing class sk4_CreateTransferRecords {
             }
         }
 
-        public Parameters(){}
+        public Parameters() {
+        }
     }
 
     @InvocableMethod
     public static void createRecords(List<FlowInput> inputs) {
         List<sk4_Transfer__c> transfers = new List<sk4_Transfer__c>();
 
-        for (FlowInput input: inputs) {
-
-            if (input.pocketMoneyAmount != null && input.savingsAmount != null) {
+        for (FlowInput input : inputs) {
+            if (
+                input.pocketMoneyAmount != null &&
+                input.savingsAmount != null
+            ) {
                 if (input.pocketMoneyAmount < input.savingsAmount) {
-                    throw new TransferException('You cannot save more money that is given.');
+                    throw new TransferException(
+                        'You cannot save more money that is given.'
+                    );
                 }
             }
-            if(input.otherAmount != NULL && String.isBlank(input.description)) {
-                throw new TransferException('Description must be set in Other Transfer.');
+            if (
+                input.otherAmount != null && String.isBlank(input.description)
+            ) {
+                throw new TransferException(
+                    'Description must be set in Other Transfer.'
+                );
             }
 
-            if (input.pocketMoneyAmount != NULL && input.pocketMoneyAmount > 0) {
+            if (
+                input.pocketMoneyAmount != null &&
+                input.pocketMoneyAmount > 0
+            ) {
                 transfers.add(createPocketMoneyTransfer(input));
             }
-            if (input.savingsAmount != NULL && input.savingsAmount > 0) {
+            if (input.savingsAmount != null && input.savingsAmount > 0) {
                 transfers.add(createSavingsTransfer(input));
             }
-            if(input.withdrawAmount != NULL && input.withdrawAmount > 0) {
+            if (input.withdrawAmount != null && input.withdrawAmount > 0) {
                 transfers.add(createWithdrawTransfer(input));
             }
-            if (input.otherAmount != NULL && input.otherAmount > 0) {
+            if (input.otherAmount != null && input.otherAmount > 0) {
                 transfers.add(createOtherTransfer(input));
             }
-            if (input.deductionAmount != NULL && input.deductionAmount > 0) {
+            if (input.deductionAmount != null && input.deductionAmount > 0) {
                 transfers.add(createDeductionTransfer(input));
             }
         }
 
         insertRecords(transfers);
-        
     }
 
     public static void insertRecords(List<sk4_transfer__c> transfers) {
-        List<String> errors = new List<String>(); 
+        List<String> errors = new List<String>();
 
         List<Database.SaveResult> srList = Database.insert(transfers, false);
-        
+
         for (Integer i = 0; i < srList.size(); i++) {
             Database.SaveResult sr = srList[i];
             String name = transfers[i].sk4_child__r.Name;
             if (sr.isSuccess()) {
-                System.debug('# Successfully inserted transfer for ' + name + '.');
-            }
-            else {        
-                for(Database.Error err : sr.getErrors()) {
-                    System.debug('* ***************************************************************');                    
-                    System.debug('* The following error has occurred for ' + name + '.');                    
-                    System.debug('* ' + err.getStatusCode() + ': ' + err.getMessage());
-                    System.debug('* Fields that affected this error: ' + err.getFields());
+                System.debug(
+                    '# Successfully inserted transfer for ' + name + '.'
+                );
+            } else {
+                for (Database.Error err : sr.getErrors()) {
+                    System.debug(
+                        '* ***************************************************************'
+                    );
+                    System.debug(
+                        '* The following error has occurred for ' + name + '.'
+                    );
+                    System.debug(
+                        '* ' + err.getStatusCode() + ': ' + err.getMessage()
+                    );
+                    System.debug(
+                        '* Fields that affected this error: ' + err.getFields()
+                    );
                     errors.add(err.getStatusCode() + ': ' + err.getMessage());
                 }
             }
         }
-        
+
         if (errors.size() > 0) {
             throw new TransferException(String.join(errors, '\r\n'));
         }
-    } 
+    }
 
     private static sk4_Transfer__c createOtherTransfer(FlowInput input) {
         Parameters p = new Parameters(input);
@@ -116,14 +136,14 @@ public with sharing class sk4_CreateTransferRecords {
         p.type = sk4_Const.TRANSFER_TYPE_POCKETMONEY;
         return createTransfer(p);
     }
-    
+
     private static sk4_Transfer__c createSavingsTransfer(FlowInput input) {
         Parameters p = new Parameters(input);
         p.transferAmount = input.savingsAmount;
         p.type = sk4_Const.TRANSFER_TYPE_SAVINGS;
         return createTransfer(p);
     }
-    
+
     private static sk4_Transfer__c createDeductionTransfer(FlowInput input) {
         Parameters p = new Parameters(input);
         p.transferAmount = input.deductionAmount;
@@ -155,5 +175,4 @@ public with sharing class sk4_CreateTransferRecords {
     private static String getName(String type) {
         return type + '-' + String.valueOf(Date.today());
     }
-
 }
