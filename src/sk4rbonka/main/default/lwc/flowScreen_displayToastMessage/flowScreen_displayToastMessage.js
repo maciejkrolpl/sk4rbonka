@@ -2,34 +2,34 @@
  *  Hugo Lemos Initial version
  *      Used to display toast messages from flows.
  */
-import { LightningElement, api } from 'lwc'
+import { LightningElement, api } from 'lwc';
 import {
     FlowNavigationNextEvent,
     FlowNavigationFinishEvent,
-} from 'lightning/flowSupport'
-import { ShowToastEvent } from 'lightning/platformShowToastEvent'
-import { NavigationMixin } from 'lightning/navigation'
+} from 'lightning/flowSupport';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { NavigationMixin } from 'lightning/navigation';
 
 export default class flowScreen_displayToastMessage extends NavigationMixin(
     LightningElement
 ) {
-    hasRendered = false
+    hasRendered = false;
 
-    @api recordId
-    @api objectApiName
-    @api title
-    @api variant
-    @api message
-    @api urlLabel
-    @api triggerNavigationNextEvent
+    @api recordId;
+    @api objectApiName;
+    @api title;
+    @api variant;
+    @api message;
+    @api urlLabel;
+    @api triggerNavigationNextEvent;
 
     @api
-    availableActions = []
+    availableActions = [];
 
     renderedCallback() {
         if (!this.hasRendered) {
-            this.hasRendered = true
-            this.showToastMessage()
+            this.hasRendered = true;
+            this.showToastMessage();
         }
     }
 
@@ -40,7 +40,7 @@ export default class flowScreen_displayToastMessage extends NavigationMixin(
                 recordId: this.recordId,
                 actionName: 'view',
             },
-        })
+        });
 
         const event = new ShowToastEvent({
             title: this.title,
@@ -52,18 +52,18 @@ export default class flowScreen_displayToastMessage extends NavigationMixin(
                     label: this.urlLabel,
                 },
             ],
-        })
-        this.dispatchEvent(event)
+        });
+        this.dispatchEvent(event);
 
         if (this.triggerNavigationNextEvent) {
             if (this.availableActions.find((action) => action === 'NEXT')) {
-                const navigateNextEvent = new FlowNavigationNextEvent()
-                this.dispatchEvent(navigateNextEvent)
+                const navigateNextEvent = new FlowNavigationNextEvent();
+                this.dispatchEvent(navigateNextEvent);
             } else if (
                 this.availableActions.find((action) => action === 'FINISH')
             ) {
-                const navigateFinishEvent = new FlowNavigationFinishEvent()
-                this.dispatchEvent(navigateFinishEvent)
+                const navigateFinishEvent = new FlowNavigationFinishEvent();
+                this.dispatchEvent(navigateFinishEvent);
             }
         }
     }
