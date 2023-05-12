@@ -67,6 +67,10 @@ public with sharing class sk4_CumulateTriggerHandler {
     }
 
     private static Decimal getCumulationAmount(sk4_child__c child) {
+        if (child.sk4_balance__c <= 0) {
+            return 0;
+        }
+
         Decimal transferAmount = child.sk4_balance__c * child.sk4_family__r.sk4_cumulationPercent__c / 100;
         if (child.sk4_family__r.sk4_cumulationLowerTreshold__c != NULL) {
             transferAmount = Math.max(transferAmount, child.sk4_family__r.sk4_cumulationLowerTreshold__c);
