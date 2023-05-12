@@ -87,6 +87,38 @@ public with sharing class sk4_CumulateTriggerHandlerTest {
     }
 
     @IsTest
+    static void testCumulationZeroWhenBalanceNegative() {
+        User user = [SELECT Id FROM User WHERE LastName = :USER_NAME LIMIT 1];
+        sk4_family__c family = [SELECT Id FROM sk4_family__c WHERE sk4_cumulationPercent__c != NULL];
+        sk4_parent__c parent = [SELECT Id FROM sk4_parent__c WHERE sk4_family__c = :family.Id];
+        sk4_child__c child = [SELECT Id FROM sk4_child__c LIMIT 1];
+
+        sk4_transfer__c t1 = sk4_TestDataFactory.createStandardTransfer(
+            sk4_Const.TRANSFER_TYPE_WITHDRAW, 
+            20, 
+            child.Id,
+            parent.Id
+        );
+
+        insert t1;
+
+        System.runAs(user) {
+            Test.startTest();
+            insert sk4_TestDataFactory.createCumulation(Date.today(), family.Id);
+            Test.stopTest();
+
+            sk4_transfer__c transfer = [
+                SELECT Id, sk4_transferAmount__c
+                FROM sk4_transfer__c
+                WHERE RecordTypeId = :CUMULATION_TRANSFER_RT_ID
+                AND sk4_child__c = :child.Id
+            ];
+
+            Assert.areEqual(0, transfer.sk4_transferAmount__c);
+        }
+    }
+
+    @IsTest
     static void testCreateCumulationTransfers() {
         User user = [SELECT Id FROM User WHERE LastName = :USER_NAME LIMIT 1];
         sk4_family__c family = [SELECT Id FROM sk4_family__c WHERE sk4_cumulationPercent__c != NULL];
