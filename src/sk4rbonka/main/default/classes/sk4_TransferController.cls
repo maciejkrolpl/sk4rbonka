@@ -7,12 +7,12 @@ public with sharing class sk4_TransferController {
         'Deduction'
     };
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static List<String> getMinusTypes() {
         return sk4_Const.MINUS_TRANSFERS;
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static List<Wrapper> getTransfersByChildren(Id childId) {
         List<Wrapper> result = new List<Wrapper>();
 
@@ -25,7 +25,7 @@ public with sharing class sk4_TransferController {
                 sk4_transferAmount__c
             FROM sk4_transfer__c
             WHERE sk4_child__c = :childId AND sk4_type__c IN :transfersToQuery
-            ORDER BY sk4_date__c ASC
+            ORDER BY sk4_date__c DESC
         ];
 
         Integer l = transfers.size();

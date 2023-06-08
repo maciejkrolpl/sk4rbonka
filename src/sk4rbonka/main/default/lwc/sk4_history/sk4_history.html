@@ -1,15 +1,13 @@
 <template>
-    <template if:true={minusTypes}>
-        <template if:true={transfers}>
-            <lightning-datatable
-                key-field="id"
-                data={transfers}
-                columns={columns}
-                hide-checkbox-column
-                column-widths-mode="auto"
-                class="slds-max-medium-table_stacked"
-            >
-            </lightning-datatable>
-        </template>
+    <template if:true={transfers}>
+        <lightning-datatable
+            key-field="id"
+            data={transfers}
+            columns={columns}
+            hide-checkbox-column
+            column-widths-mode="auto"
+            class="slds-max-medium-table_stacked"
+        >
+        </lightning-datatable>
     </template>
 </template>

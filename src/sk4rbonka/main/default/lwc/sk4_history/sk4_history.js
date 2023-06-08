@@ -19,7 +19,6 @@ export default class Sk4_history extends LightningElement {
 
     @api recordId;
     @track transfers;
-    @track minusTypes;
 
     displayErrorToast(message) {
         const toast = new ShowToastEvent({
@@ -30,29 +29,21 @@ export default class Sk4_history extends LightningElement {
         this.dispatchEvent(toast);
     }
 
-    @wire(getMinusTypes) wireMinusTypes({ error, data }) {
-        if (data) {
-            this.minusTypes = data;
-        } else if (error) {
-            this.minusTypes = undefined;
-            this.displayErrorToast(error.body.message);
-        }
-    }
-
-    @wire(getTransfersByChildren, { childId: '$recordId' }) wireTransfers({
-        error,
-        data,
-    }) {
-        if (data) {
-            this.transfers = data.map((item) => ({
-                ...item,
-                color: this.minusTypes.includes(item.type)
-                    ? 'slds-text-color_error'
-                    : '',
-            }));
-        } else if (error) {
-            this.transfers = undefined;
-            this.displayErrorToast(error.body.message);
-        }
+    connectedCallback() {
+        const getMinusTypesPromise = getMinusTypes();
+        const getTransfersPromise = getTransfersByChildren({
+            childId: this.recordId,
+        });
+        Promise.all([getMinusTypesPromise, getTransfersPromise]).then(
+            ([minusTypes, transfers]) => {
+                this.transfers = transfers.map((item) => ({
+                    ...item,
+                    color: minusTypes.includes(item.type)
+                        ? 'slds-text-color_error'
+                        : '',
+                }));
+                console.log(JSON.parse(JSON.stringify(this.transfers)));
+            }
+        );
     }
 }
