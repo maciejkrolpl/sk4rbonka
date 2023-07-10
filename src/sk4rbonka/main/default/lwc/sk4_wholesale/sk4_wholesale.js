@@ -11,19 +11,20 @@ export default class Sk4_wholesale extends LightningElement {
         this.getAllChildren();
     }
 
-    getAllChildren() {
+    async getAllChildren() {
         this.children = undefined;
         this.error = undefined;
-        getAllChildren()
-            .then((children) => {
-                this.children = children.map((child) => ({
-                    ...child,
-                    give: 0,
-                    save: 0,
-                }));
-                console.log(JSON.parse(JSON.stringify(this.children)));
-            })
-            .catch((error) => (this.error = error));
+
+        try {
+            const children = await getAllChildren();
+            this.children = children.map((child) => ({
+                ...child,
+                give: 0,
+                save: 0,
+            }));
+        } catch (error) {
+            this.error = error;
+        }
     }
 
     handleChange(event) {
@@ -59,7 +60,7 @@ export default class Sk4_wholesale extends LightningElement {
         });
     }
 
-    handleSave() {
+    async handleSave() {
         console.log(JSON.parse(JSON.stringify(this.children)));
         if (!this.checkValidity()) {
             return;
@@ -71,16 +72,15 @@ export default class Sk4_wholesale extends LightningElement {
             return;
         }
 
-        saveNewTransfers({ children })
-            .then(() => {
-                this.popUpEvent('success', 'Operation completed successfully.');
-                this.clearInputs();
-                this.getAllChildren();
-            })
-            .catch((error) => {
-                this.popUpEvent('error', error.body.message);
-                console.error(error);
-            });
+        try {
+            saveNewTransfers({ children });
+            this.popUpEvent('success', 'Operation completed successfully.');
+            this.clearInputs();
+            this.getAllChildren();
+        } catch (e) {
+            this.popUpEvent('error', error.body.message);
+            console.error(error);
+        }
     }
 
     checkValidity() {

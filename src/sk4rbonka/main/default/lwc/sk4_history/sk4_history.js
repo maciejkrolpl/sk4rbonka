@@ -7,18 +7,24 @@ export default class Sk4_history extends LightningElement {
     columns = [
         { label: 'Date', fieldName: 'dt', type: 'date-local' },
         { label: 'Type', fieldName: 'type' },
-        { label: 'Description', fieldName: 'description' },
+        { label: 'Description', fieldName: 'description', editable: true },
         {
             label: 'Amount',
             fieldName: 'amount',
             type: 'currency',
             cellAttributes: { class: { fieldName: 'color' } },
+            editable: true,
         },
-        { label: 'Balance', fieldName: 'total', type: 'currency' },
+        {
+            label: 'Balance',
+            fieldName: 'total',
+            type: 'currency',
+        },
     ];
 
     @api recordId;
     @track transfers;
+    rowOffset = 0;
 
     displayErrorToast(message) {
         const toast = new ShowToastEvent({
@@ -29,21 +35,28 @@ export default class Sk4_history extends LightningElement {
         this.dispatchEvent(toast);
     }
 
-    connectedCallback() {
+    async connectedCallback() {
         const getMinusTypesPromise = getMinusTypes();
         const getTransfersPromise = getTransfersByChildren({
             childId: this.recordId,
         });
-        Promise.all([getMinusTypesPromise, getTransfersPromise]).then(
-            ([minusTypes, transfers]) => {
-                this.transfers = transfers.map((item) => ({
-                    ...item,
-                    color: minusTypes.includes(item.type)
-                        ? 'slds-text-color_error'
-                        : '',
-                }));
-                console.log(JSON.parse(JSON.stringify(this.transfers)));
-            }
-        );
+
+        try {
+            const [minusTypes, transfers] = await Promise.all([
+                getMinusTypesPromise,
+                getTransfersPromise,
+            ]);
+            this.transfers = transfers.map((item) => ({
+                ...item,
+                amount: minusTypes.includes(item.type)
+                    ? item.amount * -1
+                    : item.amount,
+                color: minusTypes.includes(item.type)
+                    ? 'slds-text-color_error'
+                    : '',
+            }));
+        } catch (e) {
+            console.error(e);
+        }
     }
 }
