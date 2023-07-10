@@ -108,7 +108,11 @@
     </quickActionList>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>sk4_date__c</fields>
+        <fields>sk4_transferAmount__c</fields>
         <relatedList>sk4_transfer__c.sk4_child__c</relatedList>
+        <sortField>sk4_date__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -116,7 +120,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7a000003FhZQ</masterLabel>
+        <masterLabel>00h7R00000iavHj</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
