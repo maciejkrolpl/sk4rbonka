@@ -7,14 +7,19 @@ export default class Sk4_history extends LightningElement {
     columns = [
         { label: 'Date', fieldName: 'dt', type: 'date-local' },
         { label: 'Type', fieldName: 'type' },
-        { label: 'Description', fieldName: 'description' },
+        { label: 'Description', fieldName: 'description', editable: true },
         {
             label: 'Amount',
             fieldName: 'amount',
             type: 'currency',
             cellAttributes: { class: { fieldName: 'color' } },
+            editable: true,
         },
-        { label: 'Balance', fieldName: 'total', type: 'currency' },
+        {
+            label: 'Balance',
+            fieldName: 'total',
+            type: 'currency',
+        },
     ];
 
     @api recordId;
@@ -42,7 +47,6 @@ export default class Sk4_history extends LightningElement {
                         ? 'slds-text-color_error'
                         : '',
                 }));
-                console.log(JSON.parse(JSON.stringify(this.transfers)));
             }
         );
     }
