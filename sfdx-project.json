@@ -1,21 +1,21 @@
 {
-  "packageDirectories": [
-    {
-      "path": "src/sk4rbonka",
-      "default": true
-    },
-    {
-      "path": "src/schedule",
-      "default": false
+    "packageDirectories": [
+        {
+            "path": "src/sk4rbonka",
+            "default": true
+        },
+        {
+            "path": "src/schedule",
+            "default": false
+        }
+    ],
+    "name": "Sk4rbonka",
+    "namespace": "",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "56.0",
+    "plugins": {
+        "sfdx-plugin-prettier": {
+            "enabled": true
+        }
     }
-  ],
-  "name": "Sk4rbonka",
-  "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "56.0",
-  "plugins": {
-    "sfdx-plugin-prettier": {
-      "enabled": true
-    }
-  }
 }
