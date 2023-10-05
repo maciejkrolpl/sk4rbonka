@@ -9,7 +9,6 @@ ISNULL(sk4_cumulationDay__c)
 ISBLANK(  sk4_cumulationPercent__c  ) 
 ||
 ISNULL(sk4_cumulationPercent__c))
-&amp;&amp;  sk4_ScheduledPocketMoneyEnabled__c = true</errorConditionFormula>
-    <errorDisplayField>sk4_ScheduledPocketMoneyEnabled__c</errorDisplayField>
+&amp;&amp;  sk4_CumulationEnabled__c = true</errorConditionFormula>
     <errorMessage>To enable Cumulation you must put Cumulation Day and Cumulation Percent</errorMessage>
 </ValidationRule>

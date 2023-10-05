@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Lower_treshold_lower_than_upper</fullName>
     <active>true</active>
@@ -7,6 +7,5 @@
 				!ISBLANK(  sk4_cumulationLowerTreshold__c ),
 				sk4_cumulationLowerTreshold__c &gt;= sk4_cumulationUpperTreshold__c
 )</errorConditionFormula>
-    <errorMessage
-    >Lower Treshold must be lower than Upper Treshold</errorMessage>
+    <errorMessage>Lower Treshold must be lower than Upper Treshold</errorMessage>
 </ValidationRule>
