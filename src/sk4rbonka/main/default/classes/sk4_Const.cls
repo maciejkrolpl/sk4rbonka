@@ -10,7 +10,7 @@ public with sharing class sk4_Const {
     public final static String TRANSFER_RECORDTYPE_STANDARD = 'Standard';
 
     public final static List<String> PLUS_TRANSFERS = new List<String>{
-        TRANSFER_TYPE_SAVINGS,
+        TRANSFER_TYPE_POCKETMONEY,
         TRANSFER_RECORDTYPE_CUMULATION,
         TRANSFER_TYPE_OTHER
     };

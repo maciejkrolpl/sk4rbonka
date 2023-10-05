@@ -7,8 +7,7 @@
                 <tr>
                     <th>Who</th>
                     <th>$ $ $</th>
-                    <th>Give</th>
-                    <th>Save</th>
+                    <th>Pocketmoney</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,22 +21,10 @@
                                 name={child.fullName}
                                 variant="label-hidden"
                                 data-name={child.fullName}
-                                data-input="give"
                                 value={child.give}
                                 onchange={handleChange}
                                 class="input-give"
-                            ></lightning-input>
-                        </td>
-                        <td>
-                            <lightning-input
-                                type="number"
-                                name={child.fullName}
-                                variant="label-hidden"
-                                data-name={child.fullName}
-                                data-input="save"
-                                value={child.save}
-                                onchange={handleChange}
-                                class="input-save"
+                                step="0.01"
                             ></lightning-input>
                         </td>
                     </tr>
@@ -58,6 +45,7 @@
             label="Continue"
             variant="brand"
             onclick={handleSave}
+            disabled={isContinueDisabled}
         ></lightning-button>
     </template>
     <template if:true={error}>
