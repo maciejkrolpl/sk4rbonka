@@ -51,8 +51,6 @@ public with sharing class sk4_Wholesale {
         @AuraEnabled
         public Decimal give { get; set; }
         @AuraEnabled
-        public Decimal save { get; set; }
-        @AuraEnabled
         public String fullName { get; set; }
         @AuraEnabled
         public Decimal balance { get; set; }

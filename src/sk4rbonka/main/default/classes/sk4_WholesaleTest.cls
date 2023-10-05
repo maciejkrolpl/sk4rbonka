@@ -116,12 +116,10 @@ public with sharing class sk4_WholesaleTest {
             sk4_Wholesale.ChildWrapper w1 = new sk4_Wholesale.ChildWrapper();
             w1.id = children[1].Id;
             w1.give = 50;
-            w1.save = 30;
 
             sk4_Wholesale.ChildWrapper w2 = new sk4_Wholesale.ChildWrapper();
             w2.id = children[2].Id;
             w2.give = 50;
-            w2.save = 50;
 
             sk4_Wholesale.ChildWrapper w3 = new sk4_Wholesale.ChildWrapper();
             w3.id = children[3].Id;
@@ -135,7 +133,7 @@ public with sharing class sk4_WholesaleTest {
 
             List<sk4_transfer__c> transfers = [SELECT Id FROM sk4_transfer__c];
 
-            Assert.areEqual(6, transfers.size());
+            Assert.areEqual(4, transfers.size());
         }
     }
 }

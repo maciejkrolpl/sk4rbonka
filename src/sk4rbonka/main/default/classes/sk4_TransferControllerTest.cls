@@ -44,12 +44,6 @@ public with sharing class sk4_TransferControllerTest {
                     parent.Id
                 ),
                 sk4_TestDataFactory.createStandardTransfer(
-                    sk4_Const.TRANSFER_TYPE_SAVINGS,
-                    10,
-                    child1.Id,
-                    parent.Id
-                ),
-                sk4_TestDataFactory.createStandardTransfer(
                     sk4_Const.TRANSFER_TYPE_DEDUCTION,
                     5,
                     child1.Id,
@@ -57,7 +51,7 @@ public with sharing class sk4_TransferControllerTest {
                 ),
                 sk4_TestDataFactory.createStandardTransfer(
                     sk4_Const.TRANSFER_TYPE_POCKETMONEY,
-                    20,
+                    0,
                     child2.Id,
                     parent.Id
                 ),
@@ -95,24 +89,24 @@ public with sharing class sk4_TransferControllerTest {
             );
 
             Assert.areEqual(3, transfers1.size());
-            Assert.areEqual(2, transfers2.size());
+            Assert.areEqual(3, transfers2.size());
 
-            Assert.areEqual(10.00, transfers1[0].amount);
-            Assert.areEqual(10.00, transfers1[0].total);
-            Assert.areEqual('Savings', transfers1[0].type);
+            Assert.areEqual(15.00, transfers1[0].amount);
+            Assert.areEqual(15.00, transfers1[0].total);
+            Assert.areEqual('PocketMoney', transfers1[0].type);
             Assert.areEqual(5.00, transfers1[1].amount);
-            Assert.areEqual(5.00, transfers1[1].total);
+            Assert.areEqual(10.00, transfers1[1].total);
             Assert.areEqual('Deduction', transfers1[1].type);
-            Assert.areEqual(2.50, transfers1[2].amount);
-            Assert.areEqual(7.50, transfers1[2].total);
+            Assert.areEqual(5.00, transfers1[2].amount);
+            Assert.areEqual(15.00, transfers1[2].total);
             Assert.areEqual('Cumulation', transfers1[2].type);
 
-            Assert.areEqual(10.00, transfers2[0].amount);
-            Assert.areEqual(-10.00, transfers2[0].total);
-            Assert.areEqual('Withdraw', transfers2[0].type);
-            Assert.areEqual(0.00, transfers2[1].amount);
+            Assert.areEqual(10.00, transfers2[1].amount);
             Assert.areEqual(-10.00, transfers2[1].total);
-            Assert.areEqual('Cumulation', transfers2[1].type);
+            Assert.areEqual('Withdraw', transfers2[1].type);
+            Assert.areEqual(0.00, transfers2[2].amount);
+            Assert.areEqual(-10.00, transfers2[2].total);
+            Assert.areEqual('Cumulation', transfers2[2].type);
         }
     }
 }
