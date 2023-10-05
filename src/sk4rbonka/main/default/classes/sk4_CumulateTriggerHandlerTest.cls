@@ -3,7 +3,7 @@ public with sharing class sk4_CumulateTriggerHandlerTest {
     private static final String USER_NAME = 'TestUser';
     private static final String FAMILY_NAME = 'TestFamily';
     private static final Decimal CUMULATION_PERCENT = 50;
-    private static final String SAVINGS_TRANSFER_TYPE = 'Savings';
+    private static final String POCKETMONEY_TRANSFER_TYPE = 'PocketMoney';
     private static Id CUMULATION_TRANSFER_RT_ID = Schema.SObjectType.sk4_transfer__c.getRecordTypeInfosByName()
         .get('Cumulation')
         .getRecordTypeId();
@@ -53,21 +53,21 @@ public with sharing class sk4_CumulateTriggerHandlerTest {
         List<sk4_child__c> children = [SELECT Id FROM sk4_child__c];
 
         sk4_transfer__c t1 = sk4_TestDataFactory.createStandardTransfer(
-            SAVINGS_TRANSFER_TYPE,
+            POCKETMONEY_TRANSFER_TYPE,
             20,
             children[0].Id,
             parent.Id
         );
 
         sk4_transfer__c t2 = sk4_TestDataFactory.createStandardTransfer(
-            SAVINGS_TRANSFER_TYPE,
+            POCKETMONEY_TRANSFER_TYPE,
             40,
             children[0].Id,
             parent.Id
         );
 
         sk4_transfer__c t3 = sk4_TestDataFactory.createStandardTransfer(
-            SAVINGS_TRANSFER_TYPE,
+            POCKETMONEY_TRANSFER_TYPE,
             15,
             children[1].Id,
             parent.Id
@@ -166,21 +166,21 @@ public with sharing class sk4_CumulateTriggerHandlerTest {
         List<sk4_child__c> children = [SELECT Id FROM sk4_child__c];
 
         sk4_transfer__c t1 = sk4_TestDataFactory.createStandardTransfer(
-            SAVINGS_TRANSFER_TYPE,
+            POCKETMONEY_TRANSFER_TYPE,
             20,
             children[0].Id,
             parent.Id
         );
 
         sk4_transfer__c t2 = sk4_TestDataFactory.createStandardTransfer(
-            SAVINGS_TRANSFER_TYPE,
+            POCKETMONEY_TRANSFER_TYPE,
             40,
             children[0].Id,
             parent.Id
         );
 
         sk4_transfer__c t3 = sk4_TestDataFactory.createStandardTransfer(
-            SAVINGS_TRANSFER_TYPE,
+            POCKETMONEY_TRANSFER_TYPE,
             15,
             children[1].Id,
             parent.Id
