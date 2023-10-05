@@ -18,10 +18,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Savings</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Withdraw</fullName>
             <default>false</default>
         </values>
