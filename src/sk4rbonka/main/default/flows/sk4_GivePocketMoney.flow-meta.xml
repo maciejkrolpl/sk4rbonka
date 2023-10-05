@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <name>Create_Records</name>
         <label>Create Records</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <actionName>sk4_CreateTransferRecords</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -32,18 +32,11 @@
                 <elementReference>PocketMoney</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>savingsAmount</name>
-            <value>
-                <elementReference>How_many_savings</elementReference>
-            </value>
-        </inputParameters>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
     <description>Other transfer</description>
     <environments>Default</environments>
-    <interviewLabel
-    >Sk4rbonka - Give PocketMoney {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Sk4rbonka - Give PocketMoney {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Sk4rbonka - Give PocketMoney</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -68,9 +61,8 @@
         <name>Get_Child</name>
         <label>Get Child</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_parent</targetReference>
         </connector>
@@ -90,9 +82,8 @@
         <name>Get_parent</name>
         <label>Get parent</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Enter_Data_Screen</targetReference>
         </connector>
@@ -112,7 +103,7 @@
         <name>Enter_Data_Screen</name>
         <label>Enter Data Screen</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -121,35 +112,19 @@
         </connector>
         <fields>
             <name>Header</name>
-            <fieldText
-            >&lt;p&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;Give {!Get_Child.Name} a PocketMoney&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;Give {!Get_Child.Name} a PocketMoney&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>PocketMoney</name>
             <dataType>Currency</dataType>
             <defaultValue>
-                <elementReference
-                >Get_Child.sk4_family__r.sk4_defaultPocketMoneyAmount__c</elementReference>
+                <elementReference>Get_Child.sk4_family__r.sk4_defaultPocketMoneyAmount__c</elementReference>
             </defaultValue>
             <fieldText>PocketMoney</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
             <scale>2</scale>
-        </fields>
-        <fields>
-            <name>How_many_savings</name>
-            <dataType>Currency</dataType>
-            <fieldText>How many savings?</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
-            <scale>0</scale>
-            <validationRule>
-                <errorMessage
-                >&lt;p&gt;You can&apos;t save more than you have!&lt;/p&gt;</errorMessage>
-                <formulaExpression
-                >{!How_many_savings} &lt;={!PocketMoney}</formulaExpression>
-            </validationRule>
         </fields>
         <nextOrFinishButtonLabel>Pay!</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -159,7 +134,7 @@
         <name>Show_Success_Toast</name>
         <label>Show Success Toast</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -203,8 +178,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn
-            >UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -223,7 +197,7 @@
         <name>Display_Error</name>
         <label>Display Error</label>
         <locationX>440</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <flowName>sk4_DisplayError</flowName>
         <inputAssignments>
             <name>Error_Message</name>

@@ -7,6 +7,14 @@ export default class Sk4_wholesale extends LightningElement {
     @track children;
     @track error;
 
+    get isContinueDisabled() {
+        const inputs = [...this.template.querySelectorAll('.input-give')];
+        return !(
+            inputs.every((input) => input.checkValidity()) &&
+            this.children.some((child) => child.give > 0)
+        );
+    }
+
     connectedCallback() {
         this.getAllChildren();
     }
@@ -20,7 +28,6 @@ export default class Sk4_wholesale extends LightningElement {
             this.children = children.map((child) => ({
                 ...child,
                 give: 0,
-                save: 0,
             }));
         } catch (error) {
             this.error = error;
@@ -29,11 +36,10 @@ export default class Sk4_wholesale extends LightningElement {
 
     handleChange(event) {
         const amount = event.target.value;
-        const input = event.target.dataset.input;
         const name = event.target.dataset.name;
         const children = this.children.map((child) => {
             if (child.fullName === name) {
-                child[input] = +amount;
+                child.give = +amount;
             }
             return child;
         });
@@ -51,29 +57,18 @@ export default class Sk4_wholesale extends LightningElement {
 
     clearInputs() {
         this.children.forEach((child) => {
-            child.save = 0;
             child.give = 0;
         });
-        this.template.querySelectorAll('.input-save').forEach((input) => {
+        this.template.querySelectorAll('.input-give').forEach((input) => {
             input.setCustomValidity('');
             input.reportValidity();
         });
     }
 
     async handleSave() {
-        console.log(JSON.parse(JSON.stringify(this.children)));
-        if (!this.checkValidity()) {
-            return;
-        }
-
-        const children = this.children.filter((child) => child.give > 0);
-
-        if (!children.length) {
-            return;
-        }
 
         try {
-            saveNewTransfers({ children });
+            await saveNewTransfers({ children });
             this.popUpEvent('success', 'Operation completed successfully.');
             this.clearInputs();
             this.getAllChildren();
@@ -81,24 +76,6 @@ export default class Sk4_wholesale extends LightningElement {
             this.popUpEvent('error', error.body.message);
             console.error(error);
         }
-    }
-
-    checkValidity() {
-        let isValid = true;
-        this.children.forEach((child) => {
-            const input = this.template.querySelector(
-                `.${child.id} .input-save`
-            );
-            if (child.save > child.give) {
-                input.setCustomValidity(' ');
-                this.popUpEvent('error', 'Cannot save more than is paid');
-                isValid = false;
-            } else {
-                input.setCustomValidity('');
-            }
-            input.reportValidity();
-        });
-        return isValid;
     }
 
     defaultAmount() {

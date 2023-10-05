@@ -6,8 +6,6 @@ public with sharing class sk4_CreateTransferRecords {
         public sk4_parent__c parent;
         @InvocableVariable(label='PocketMoney Amount')
         public Decimal pocketMoneyAmount;
-        @InvocableVariable(label='Savings Amount')
-        public Decimal savingsAmount;
         @InvocableVariable(label='Withdraw Amount')
         public Decimal withdrawAmount;
         @InvocableVariable(label='Deduction Amount')
@@ -47,16 +45,6 @@ public with sharing class sk4_CreateTransferRecords {
 
         for (FlowInput input : inputs) {
             if (
-                input.pocketMoneyAmount != null &&
-                input.savingsAmount != null
-            ) {
-                if (input.pocketMoneyAmount < input.savingsAmount) {
-                    throw new TransferException(
-                        'You cannot save more money that is given.'
-                    );
-                }
-            }
-            if (
                 input.otherAmount != null && String.isBlank(input.description)
             ) {
                 throw new TransferException(
@@ -69,9 +57,6 @@ public with sharing class sk4_CreateTransferRecords {
                 input.pocketMoneyAmount > 0
             ) {
                 transfers.add(createPocketMoneyTransfer(input));
-            }
-            if (input.savingsAmount != null && input.savingsAmount > 0) {
-                transfers.add(createSavingsTransfer(input));
             }
             if (input.withdrawAmount != null && input.withdrawAmount > 0) {
                 transfers.add(createWithdrawTransfer(input));
@@ -134,13 +119,6 @@ public with sharing class sk4_CreateTransferRecords {
         Parameters p = new Parameters(input);
         p.transferAmount = input.pocketMoneyAmount;
         p.type = sk4_Const.TRANSFER_TYPE_POCKETMONEY;
-        return createTransfer(p);
-    }
-
-    private static sk4_Transfer__c createSavingsTransfer(FlowInput input) {
-        Parameters p = new Parameters(input);
-        p.transferAmount = input.savingsAmount;
-        p.type = sk4_Const.TRANSFER_TYPE_SAVINGS;
         return createTransfer(p);
     }
 

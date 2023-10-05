@@ -54,7 +54,7 @@ export default class Sk4_history extends LightningElement {
                 color: minusTypes.includes(item.type)
                     ? 'slds-text-color_error'
                     : '',
-            }));
+            })).reverse();
         } catch (e) {
             console.error(e);
         }

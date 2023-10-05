@@ -1,10 +1,10 @@
 public with sharing class sk4_TransferController {
     private static final List<String> transfersToQuery = new List<String>{
-        'Savings',
-        'Withdraw',
-        'Cumulation',
-        'Other',
-        'Deduction'
+        sk4_Const.TRANSFER_TYPE_POCKETMONEY,
+        sk4_Const.TRANSFER_TYPE_WITHDRAW,
+        sk4_Const.TRANSFER_TYPE_CUMULATION,
+        sk4_Const.TRANSFER_TYPE_OTHER,
+        sk4_Const.TRANSFER_TYPE_DEDUCTION
     };
 
     @AuraEnabled
@@ -25,7 +25,7 @@ public with sharing class sk4_TransferController {
                 sk4_transferAmount__c
             FROM sk4_transfer__c
             WHERE sk4_child__c = :childId AND sk4_type__c IN :transfersToQuery
-            ORDER BY sk4_date__c DESC
+            ORDER BY sk4_date__c ASC
         ];
 
         Integer l = transfers.size();
