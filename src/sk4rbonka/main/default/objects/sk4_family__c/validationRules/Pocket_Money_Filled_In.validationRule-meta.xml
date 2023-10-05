@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pocket_Money_Filled_In</fullName>
+    <active>true</active>
+    <errorConditionFormula>(ISBLANK(sk4_defaultPocketMoneyAmount__c) 
+||
+ISNULL(sk4_defaultPocketMoneyAmount__c) 
+||
+ISBLANK( sk4_PocketMoneyDay__c ) 
+||
+ISNULL(sk4_PocketMoneyDay__c))
+&amp;&amp;  sk4_ScheduledPocketMoneyEnabled__c = true</errorConditionFormula>
+    <errorDisplayField>sk4_ScheduledPocketMoneyEnabled__c</errorDisplayField>
+    <errorMessage>To enable Scheduled PocketMoney you must put Default PocketMoney Amount and PocketMoney Day.</errorMessage>
+</ValidationRule>
