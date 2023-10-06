@@ -13,7 +13,14 @@
             <tbody>
                 <template for:each={children} for:item="child">
                     <tr key={child.id} class={child.id}>
-                        <td>{child.fullName}</td>
+                        <td>
+                            <a
+                                onclick={handleChildNavigate}
+                                data-child-id={child.id}
+                            >
+                                {child.fullName}
+                            </a>
+                        </td>
                         <td>{child.balance} zł</td>
                         <td>
                             <lightning-input
