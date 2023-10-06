@@ -1,5 +1,5 @@
 @IsTest
-public with sharing class sk4_CumulateSchedulerTest {
+public with sharing class sk4_ScheduleSchedulerTest {
     private final static String CRON_EXP = '0 0 0 ? * *';
 
     @IsTest
@@ -8,7 +8,7 @@ public with sharing class sk4_CumulateSchedulerTest {
         String scheduleJobId = System.schedule(
             'Test Schedule Cumulations',
             CRON_EXP,
-            new sk4_CumulateScheduler()
+            new sk4_ScheduleScheduler()
         );
         Test.stopTest();
 
@@ -23,7 +23,7 @@ public with sharing class sk4_CumulateSchedulerTest {
             classNames.add(apexClass.Name);
         }
 
-        Assert.areEqual('sk4_CumulateBatch', classNames[0]);
-        Assert.areEqual('sk4_CumulateScheduler', classNames[1]);
+        Assert.areEqual('sk4_ScheduleBatch', classNames[0]);
+        Assert.areEqual('sk4_ScheduleScheduler', classNames[1]);
     }
 }

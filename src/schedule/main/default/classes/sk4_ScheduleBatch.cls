@@ -34,8 +34,6 @@ public with sharing class sk4_ScheduleBatch implements Database.Batchable<sObjec
     }
 
     public void execute(Database.BatchableContext BC, List<sk4_family__c> scope) {
-        System.debug('scope');
-        System.debug(scope);
         List<sk4_cumulation__c> cumuls = new List<sk4_cumulation__c>();
         List<sk4_transfer__c> pocketMoneys = new List<sk4_transfer__c>();
         for (sk4_family__c family : scope) {
