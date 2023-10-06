@@ -1,9 +1,10 @@
+import { NavigationMixin } from 'lightning/navigation';
 import { LightningElement, track } from 'lwc';
 import getAllChildren from '@salesforce/apex/sk4_Wholesale.getAllChildren';
 import saveNewTransfers from '@salesforce/apex/sk4_Wholesale.saveNewTransfers';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-export default class Sk4_wholesale extends LightningElement {
+export default class Sk4_wholesale extends NavigationMixin(LightningElement) {
     @track children;
     @track error;
 
@@ -46,6 +47,17 @@ export default class Sk4_wholesale extends LightningElement {
         this.children = children;
     }
 
+    handleChildNavigate(event) {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                "recordId": event.target.dataset.childId,
+                "objectApiName": "sk4_child__c",
+                "actionName": "view"
+            },
+        });
+    }
+
     popUpEvent(variant, message) {
         const toast = new ShowToastEvent({
             title: variant.toUpperCase(),
@@ -66,7 +78,6 @@ export default class Sk4_wholesale extends LightningElement {
     }
 
     async handleSave() {
-
         try {
             await saveNewTransfers({ children });
             this.popUpEvent('success', 'Operation completed successfully.');
