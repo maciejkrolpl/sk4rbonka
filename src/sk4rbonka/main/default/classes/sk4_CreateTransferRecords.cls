@@ -108,6 +108,18 @@ public with sharing class sk4_CreateTransferRecords {
         }
     }
 
+    public static sk4_transfer__c createPocketMoneyTransfer(sk4_family__c family, Id childId) {
+        sk4_transfer__c transfer = new sk4_transfer__c();
+        transfer.sk4_type__c = sk4_Const.TRANSFER_TYPE_POCKETMONEY;
+        transfer.RecordTypeId = sk4_Const.TYPE_TO_RT_ID.get(sk4_Const.TRANSFER_TYPE_POCKETMONEY);
+        transfer.sk4_child__c = childId;
+        transfer.sk4_parent__c = family.sk4_defaultParent__c;
+        transfer.sk4_transferAmount__c = family.sk4_defaultPocketMoneyAmount__c;
+        transfer.sk4_date__c = Date.today();
+        transfer.Name = getName(sk4_Const.TRANSFER_TYPE_POCKETMONEY);
+        return transfer;
+    }
+
     private static sk4_Transfer__c createOtherTransfer(FlowInput input) {
         Parameters p = new Parameters(input);
         p.transferAmount = input.otherAmount;

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cumulation_Data_Filled_In</fullName>
+    <active>true</active>
+    <errorConditionFormula>(ISBLANK( sk4_cumulationDay__c ) 
+||
+ISNULL(sk4_cumulationDay__c) 
+||
+ISBLANK(  sk4_cumulationPercent__c  ) 
+||
+ISNULL(sk4_cumulationPercent__c))
+&amp;&amp;  sk4_CumulationEnabled__c = true</errorConditionFormula>
+    <errorMessage>To enable Cumulation you must put Cumulation Day and Cumulation Percent</errorMessage>
+</ValidationRule>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationVisibilities>
         <application>sk4rbonka</application>
@@ -32,6 +32,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>sk4_cumulation__c.sk4_cumulationYear__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>sk4_family__c.sk4_PocketMoneyDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>sk4_family__c.sk4_ScheduledPocketMoneyEnabled__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>sk4_family__c.sk4_CumulationEnabled__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
