@@ -79,7 +79,7 @@ export default class Sk4_wholesale extends NavigationMixin(LightningElement) {
 
     async handleSave() {
         try {
-            await saveNewTransfers({ children });
+            await saveNewTransfers({ children: this.children });
             this.popUpEvent('success', 'Operation completed successfully.');
             this.clearInputs();
             this.getAllChildren();
