@@ -36,17 +36,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>sk4_family__c.sk4_CumulationEnabled__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>sk4_family__c.sk4_PocketMoneyDay__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>sk4_family__c.sk4_ScheduledPocketMoneyEnabled__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>sk4_family__c.sk4_CumulationEnabled__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -67,6 +67,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>sk4_family__c.sk4_cumulationUpperTreshold__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>sk4_family__c.sk4_defaultParent__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
