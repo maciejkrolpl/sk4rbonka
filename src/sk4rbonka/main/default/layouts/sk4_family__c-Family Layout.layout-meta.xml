@@ -126,6 +126,10 @@
         <fields>NAME</fields>
         <relatedList>sk4_parent__c.sk4_family__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>sk4_transfer__c.sk4_family__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
