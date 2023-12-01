@@ -1,9 +1,4 @@
-trigger sk4_CumulateTrigger on sk4_cumulation__c(
-    before insert,
-    after insert,
-    before update,
-    before delete
-) {
+trigger sk4_CumulateTrigger on sk4_cumulation__c(before insert, after insert, before update, before delete) {
     if (Trigger.isBefore) {
         if (Trigger.isInsert) {
             sk4_CumulateTriggerHandler.beforeInsert(Trigger.new);

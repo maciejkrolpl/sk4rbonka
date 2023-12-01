@@ -10,30 +10,16 @@ public with sharing class sk4_TransferControllerTest {
     static void makeData() {
         User user = sk4_TestDataFactory.createSk4rbonkaUser(USERNAME);
         System.runAs(user) {
-            sk4_family__c family = sk4_TestDataFactory.createFamilies(
-                FAMILY,
-                1
-            )[0];
+            sk4_family__c family = sk4_TestDataFactory.createFamilies(FAMILY, 1)[0];
             family.sk4_cumulationDay__c = Date.today().day();
             family.sk4_cumulationPercent__c = 50;
             insert family;
 
-            sk4_parent__c parent = sk4_TestDataFactory.createParent(
-                PARENT,
-                family.Id
-            );
+            sk4_parent__c parent = sk4_TestDataFactory.createParent(PARENT, family.Id);
             insert parent;
 
-            sk4_child__c child1 = sk4_TestDataFactory.createChildren(
-                CHILD1,
-                1,
-                family.Id
-            )[0];
-            sk4_child__c child2 = sk4_TestDataFactory.createChildren(
-                CHILD2,
-                1,
-                family.Id
-            )[0];
+            sk4_child__c child1 = sk4_TestDataFactory.createChildren(CHILD1, 1, family.Id)[0];
+            sk4_child__c child2 = sk4_TestDataFactory.createChildren(CHILD2, 1, family.Id)[0];
             insert new List<sk4_child__c>{ child1, child2 };
 
             List<sk4_transfer__c> transfers = new List<sk4_transfer__c>{
@@ -43,31 +29,18 @@ public with sharing class sk4_TransferControllerTest {
                     child1.Id,
                     parent.Id
                 ),
-                sk4_TestDataFactory.createStandardTransfer(
-                    sk4_Const.TRANSFER_TYPE_DEDUCTION,
-                    5,
-                    child1.Id,
-                    parent.Id
-                ),
+                sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_DEDUCTION, 5, child1.Id, parent.Id),
                 sk4_TestDataFactory.createStandardTransfer(
                     sk4_Const.TRANSFER_TYPE_POCKETMONEY,
                     0,
                     child2.Id,
                     parent.Id
                 ),
-                sk4_TestDataFactory.createStandardTransfer(
-                    sk4_Const.TRANSFER_TYPE_WITHDRAW,
-                    10,
-                    child2.Id,
-                    parent.Id
-                )
+                sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_WITHDRAW, 10, child2.Id, parent.Id)
             };
             insert transfers;
 
-            sk4_cumulation__c cumulation = sk4_TestDataFactory.createCumulation(
-                Date.today(),
-                family.Id
-            );
+            sk4_cumulation__c cumulation = sk4_TestDataFactory.createCumulation(Date.today(), family.Id);
             insert cumulation;
         }
     }

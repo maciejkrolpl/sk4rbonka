@@ -13,13 +13,13 @@ export default class Sk4_history extends LightningElement {
             fieldName: 'amount',
             type: 'currency',
             cellAttributes: { class: { fieldName: 'color' } },
-            editable: true,
+            editable: true
         },
         {
             label: 'Balance',
             fieldName: 'total',
-            type: 'currency',
-        },
+            type: 'currency'
+        }
     ];
 
     @api recordId;
@@ -30,7 +30,7 @@ export default class Sk4_history extends LightningElement {
         const toast = new ShowToastEvent({
             title: 'Error',
             variant: 'error',
-            message,
+            message
         });
         this.dispatchEvent(toast);
     }
@@ -38,23 +38,18 @@ export default class Sk4_history extends LightningElement {
     async connectedCallback() {
         const getMinusTypesPromise = getMinusTypes();
         const getTransfersPromise = getTransfersByChildren({
-            childId: this.recordId,
+            childId: this.recordId
         });
 
         try {
-            const [minusTypes, transfers] = await Promise.all([
-                getMinusTypesPromise,
-                getTransfersPromise,
-            ]);
-            this.transfers = transfers.map((item) => ({
-                ...item,
-                amount: minusTypes.includes(item.type)
-                    ? item.amount * -1
-                    : item.amount,
-                color: minusTypes.includes(item.type)
-                    ? 'slds-text-color_error'
-                    : '',
-            })).reverse();
+            const [minusTypes, transfers] = await Promise.all([getMinusTypesPromise, getTransfersPromise]);
+            this.transfers = transfers
+                .map(item => ({
+                    ...item,
+                    amount: minusTypes.includes(item.type) ? item.amount * -1 : item.amount,
+                    color: minusTypes.includes(item.type) ? 'slds-text-color_error' : ''
+                }))
+                .reverse();
         } catch (e) {
             console.error(e);
         }

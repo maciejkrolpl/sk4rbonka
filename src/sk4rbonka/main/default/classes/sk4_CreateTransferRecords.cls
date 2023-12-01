@@ -44,18 +44,11 @@ public with sharing class sk4_CreateTransferRecords {
         List<sk4_Transfer__c> transfers = new List<sk4_Transfer__c>();
 
         for (FlowInput input : inputs) {
-            if (
-                input.otherAmount != null && String.isBlank(input.description)
-            ) {
-                throw new TransferException(
-                    'Description must be set in Other Transfer.'
-                );
+            if (input.otherAmount != null && String.isBlank(input.description)) {
+                throw new TransferException('Description must be set in Other Transfer.');
             }
 
-            if (
-                input.pocketMoneyAmount != null &&
-                input.pocketMoneyAmount > 0
-            ) {
+            if (input.pocketMoneyAmount != null && input.pocketMoneyAmount > 0) {
                 transfers.add(createPocketMoneyTransfer(input));
             }
             if (input.withdrawAmount != null && input.withdrawAmount > 0) {
@@ -81,23 +74,13 @@ public with sharing class sk4_CreateTransferRecords {
             Database.SaveResult sr = srList[i];
             String name = transfers[i].sk4_child__r.Name;
             if (sr.isSuccess()) {
-                System.debug(
-                    '# Successfully inserted transfer for ' + name + '.'
-                );
+                System.debug('# Successfully inserted transfer for ' + name + '.');
             } else {
                 for (Database.Error err : sr.getErrors()) {
-                    System.debug(
-                        '* ***************************************************************'
-                    );
-                    System.debug(
-                        '* The following error has occurred for ' + name + '.'
-                    );
-                    System.debug(
-                        '* ' + err.getStatusCode() + ': ' + err.getMessage()
-                    );
-                    System.debug(
-                        '* Fields that affected this error: ' + err.getFields()
-                    );
+                    System.debug('* ***************************************************************');
+                    System.debug('* The following error has occurred for ' + name + '.');
+                    System.debug('* ' + err.getStatusCode() + ': ' + err.getMessage());
+                    System.debug('* Fields that affected this error: ' + err.getFields());
                     errors.add(err.getStatusCode() + ': ' + err.getMessage());
                 }
             }

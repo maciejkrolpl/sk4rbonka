@@ -21,14 +21,8 @@ public with sharing class sk4_Const {
     };
 
     private static final Map<String, Schema.RecordTypeInfo> recordTypes = Schema.SObjectType.sk4_Transfer__c.getRecordTypeInfosByDeveloperName();
-    private static final ID STANDARD_RT_ID = recordTypes.get(
-            TRANSFER_RECORDTYPE_STANDARD
-        )
-        .getRecordTypeId();
-    private static final ID CUMULATION_RT_ID = recordTypes.get(
-            TRANSFER_RECORDTYPE_CUMULATION
-        )
-        .getRecordTypeId();
+    private static final ID STANDARD_RT_ID = recordTypes.get(TRANSFER_RECORDTYPE_STANDARD).getRecordTypeId();
+    private static final ID CUMULATION_RT_ID = recordTypes.get(TRANSFER_RECORDTYPE_CUMULATION).getRecordTypeId();
 
     public static final Map<String, String> TYPE_TO_RT_ID = new Map<String, String>{
         TRANSFER_TYPE_SAVINGS => STANDARD_RT_ID,

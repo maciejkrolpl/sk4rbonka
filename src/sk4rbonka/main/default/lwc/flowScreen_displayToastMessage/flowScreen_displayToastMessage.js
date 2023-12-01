@@ -3,16 +3,11 @@
  *      Used to display toast messages from flows.
  */
 import { LightningElement, api } from 'lwc';
-import {
-    FlowNavigationNextEvent,
-    FlowNavigationFinishEvent,
-} from 'lightning/flowSupport';
+import { FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 
-export default class flowScreen_displayToastMessage extends NavigationMixin(
-    LightningElement
-) {
+export default class flowScreen_displayToastMessage extends NavigationMixin(LightningElement) {
     hasRendered = false;
 
     @api recordId;
@@ -38,8 +33,8 @@ export default class flowScreen_displayToastMessage extends NavigationMixin(
             type: 'standard__recordPage',
             attributes: {
                 recordId: this.recordId,
-                actionName: 'view',
-            },
+                actionName: 'view'
+            }
         });
 
         const event = new ShowToastEvent({
@@ -49,19 +44,17 @@ export default class flowScreen_displayToastMessage extends NavigationMixin(
             messageData: [
                 {
                     url,
-                    label: this.urlLabel,
-                },
-            ],
+                    label: this.urlLabel
+                }
+            ]
         });
         this.dispatchEvent(event);
 
         if (this.triggerNavigationNextEvent) {
-            if (this.availableActions.find((action) => action === 'NEXT')) {
+            if (this.availableActions.find(action => action === 'NEXT')) {
                 const navigateNextEvent = new FlowNavigationNextEvent();
                 this.dispatchEvent(navigateNextEvent);
-            } else if (
-                this.availableActions.find((action) => action === 'FINISH')
-            ) {
+            } else if (this.availableActions.find(action => action === 'FINISH')) {
                 const navigateFinishEvent = new FlowNavigationFinishEvent();
                 this.dispatchEvent(navigateFinishEvent);
             }

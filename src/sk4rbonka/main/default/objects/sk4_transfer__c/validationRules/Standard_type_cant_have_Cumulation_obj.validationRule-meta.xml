@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Standard_type_cant_have_Cumulation_obj</fullName>
     <active>true</active>
@@ -6,6 +6,5 @@
     RecordType.DeveloperName &lt;&gt; &apos;Cumulation&apos;,
 				!ISBLANK(sk4_cumulation__c)
 )</errorConditionFormula>
-    <errorMessage
-    >Non-Cumulation Transfer cannot have Cumulation object related!</errorMessage>
+    <errorMessage>Non-Cumulation Transfer cannot have Cumulation object related!</errorMessage>
 </ValidationRule>

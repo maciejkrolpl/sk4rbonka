@@ -5,11 +5,7 @@ public with sharing class sk4_ScheduleSchedulerTest {
     @IsTest
     static void shouldRunSchedule() {
         Test.startTest();
-        String scheduleJobId = System.schedule(
-            'Test Schedule Cumulations',
-            CRON_EXP,
-            new sk4_ScheduleScheduler()
-        );
+        String scheduleJobId = System.schedule('Test Schedule Cumulations', CRON_EXP, new sk4_ScheduleScheduler());
         Test.stopTest();
 
         List<String> classNames = new List<String>();
