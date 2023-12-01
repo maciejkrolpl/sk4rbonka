@@ -8,7 +8,7 @@ public with sharing class sk4_ScheduleBatch implements Database.Batchable<sObjec
         return todaysDay == today.day();
     }
 
-    private sk4_cumulation__c createCumulation(sk4_family__c family){
+    private sk4_cumulation__c createCumulation(sk4_family__c family) {
         sk4_cumulation__c cumul = new sk4_cumulation__c();
         cumul.sk4_family__c = family.Id;
         cumul.sk4_cumulationDate__c = date.today();
@@ -51,5 +51,4 @@ public with sharing class sk4_ScheduleBatch implements Database.Batchable<sObjec
 
     public void finish(Database.BatchableContext BC) {
     }
-
 }

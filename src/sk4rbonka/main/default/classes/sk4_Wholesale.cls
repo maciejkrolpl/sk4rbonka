@@ -3,11 +3,7 @@ public with sharing class sk4_Wholesale {
     public static List<ChildWrapper> getAllChildren() {
         List<ChildWrapper> wrappers = new List<ChildWrapper>();
         for (sk4_child__c child : [
-            SELECT
-                Id,
-                sk4_fullName__c,
-                sk4_balance__c,
-                sk4_family__r.sk4_defaultPocketMoneyAmount__c
+            SELECT Id, sk4_fullName__c, sk4_balance__c, sk4_family__r.sk4_defaultPocketMoneyAmount__c
             FROM sk4_child__c
         ]) {
             ChildWrapper cw = new ChildWrapper();

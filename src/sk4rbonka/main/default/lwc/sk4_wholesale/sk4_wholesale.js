@@ -10,10 +10,7 @@ export default class Sk4_wholesale extends NavigationMixin(LightningElement) {
 
     get isContinueDisabled() {
         const inputs = [...this.template.querySelectorAll('.input-give')];
-        return !(
-            inputs.every((input) => input.checkValidity()) &&
-            this.children.some((child) => child.give > 0)
-        );
+        return !(inputs.every(input => input.checkValidity()) && this.children.some(child => child.give > 0));
     }
 
     connectedCallback() {
@@ -26,9 +23,9 @@ export default class Sk4_wholesale extends NavigationMixin(LightningElement) {
 
         try {
             const children = await getAllChildren();
-            this.children = children.map((child) => ({
+            this.children = children.map(child => ({
                 ...child,
-                give: 0,
+                give: 0
             }));
         } catch (error) {
             this.error = error;
@@ -38,7 +35,7 @@ export default class Sk4_wholesale extends NavigationMixin(LightningElement) {
     handleChange(event) {
         const amount = event.target.value;
         const name = event.target.dataset.name;
-        const children = this.children.map((child) => {
+        const children = this.children.map(child => {
             if (child.fullName === name) {
                 child.give = +amount;
             }
@@ -51,10 +48,10 @@ export default class Sk4_wholesale extends NavigationMixin(LightningElement) {
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
             attributes: {
-                "recordId": event.target.dataset.childId,
-                "objectApiName": "sk4_child__c",
-                "actionName": "view"
-            },
+                recordId: event.target.dataset.childId,
+                objectApiName: 'sk4_child__c',
+                actionName: 'view'
+            }
         });
     }
 
@@ -62,16 +59,16 @@ export default class Sk4_wholesale extends NavigationMixin(LightningElement) {
         const toast = new ShowToastEvent({
             title: variant.toUpperCase(),
             variant,
-            message,
+            message
         });
         this.dispatchEvent(toast);
     }
 
     clearInputs() {
-        this.children.forEach((child) => {
+        this.children.forEach(child => {
             child.give = 0;
         });
-        this.template.querySelectorAll('.input-give').forEach((input) => {
+        this.template.querySelectorAll('.input-give').forEach(input => {
             input.setCustomValidity('');
             input.reportValidity();
         });
@@ -90,7 +87,7 @@ export default class Sk4_wholesale extends NavigationMixin(LightningElement) {
     }
 
     defaultAmount() {
-        this.children.forEach((child) => {
+        this.children.forEach(child => {
             if (child.defaultAmount) {
                 child.give = +child.defaultAmount;
             }

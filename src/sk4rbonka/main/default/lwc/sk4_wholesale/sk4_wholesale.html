@@ -1,8 +1,6 @@
 <template>
     <template if:true={children}>
-        <table
-            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
-        >
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
             <thead>
                 <tr>
                     <th>Who</th>
@@ -14,12 +12,7 @@
                 <template for:each={children} for:item="child">
                     <tr key={child.id} class={child.id}>
                         <td>
-                            <a
-                                onclick={handleChildNavigate}
-                                data-child-id={child.id}
-                            >
-                                {child.fullName}
-                            </a>
+                            <a onclick={handleChildNavigate} data-child-id={child.id}> {child.fullName} </a>
                         </td>
                         <td>{child.balance} zł</td>
                         <td>
@@ -38,16 +31,8 @@
                 </template>
             </tbody>
         </table>
-        <lightning-button
-            label="Default amount"
-            variant="brand-outline"
-            onclick={defaultAmount}
-        ></lightning-button>
-        <lightning-button
-            label="Clear"
-            variant="neutral"
-            onclick={clearInputs}
-        ></lightning-button>
+        <lightning-button label="Default amount" variant="brand-outline" onclick={defaultAmount}></lightning-button>
+        <lightning-button label="Clear" variant="neutral" onclick={clearInputs}></lightning-button>
         <lightning-button
             label="Continue"
             variant="brand"

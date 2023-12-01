@@ -27,15 +27,11 @@ public with sharing class sk4_CumulateTriggerHandler {
 
     private static void preventUpdating(List<sk4_cumulation__c> cumulations) {
         for (sk4_cumulation__c c : cumulations) {
-            c.addError(
-                'Editing is not allowed. Delete cumulation and create new one.'
-            );
+            c.addError('Editing is not allowed. Delete cumulation and create new one.');
         }
     }
 
-    private static void createCumulationTransfers(
-        List<sk4_cumulation__c> cumulations
-    ) {
+    private static void createCumulationTransfers(List<sk4_cumulation__c> cumulations) {
         List<sk4_transfer__c> transfers = new List<sk4_transfer__c>();
         Map<Id, sk4_cumulation__c> familyToCumulation = new Map<Id, sk4_cumulation__c>();
 
@@ -61,9 +57,7 @@ public with sharing class sk4_CumulateTriggerHandler {
             p.childId = child.Id;
             p.transferAmount = getCumulationAmount(child);
             p.cumulationId = familyToCumulation.get(child.sk4_family__c).Id;
-            sk4_transfer__c transfer = sk4_CreateTransferRecords.createTransfer(
-                p
-            );
+            sk4_transfer__c transfer = sk4_CreateTransferRecords.createTransfer(p);
             transfers.add(transfer);
         }
 
@@ -75,36 +69,21 @@ public with sharing class sk4_CumulateTriggerHandler {
             return 0;
         }
 
-        Decimal transferAmount =
-            child.sk4_balance__c *
-            child.sk4_family__r.sk4_cumulationPercent__c /
-            100;
+        Decimal transferAmount = child.sk4_balance__c * child.sk4_family__r.sk4_cumulationPercent__c / 100;
         if (child.sk4_family__r.sk4_cumulationLowerTreshold__c != null) {
-            transferAmount = Math.max(
-                transferAmount,
-                child.sk4_family__r.sk4_cumulationLowerTreshold__c
-            );
+            transferAmount = Math.max(transferAmount, child.sk4_family__r.sk4_cumulationLowerTreshold__c);
         }
         if (child.sk4_family__r.sk4_cumulationUpperTreshold__c != null) {
-            transferAmount = Math.min(
-                transferAmount,
-                child.sk4_family__r.sk4_cumulationUpperTreshold__c
-            );
+            transferAmount = Math.min(transferAmount, child.sk4_family__r.sk4_cumulationUpperTreshold__c);
         }
         return transferAmount;
     }
 
-    private static void checkIsCumulationInCurrentMonth(
-        List<sk4_cumulation__c> cumulations
-    ) {
+    private static void checkIsCumulationInCurrentMonth(List<sk4_cumulation__c> cumulations) {
         Map<Id, List<sk4_cumulation__c>> familyToCumulation = new Map<Id, List<sk4_cumulation__c>>();
 
         for (sk4_cumulation__c c : [
-            SELECT
-                Id,
-                sk4_family__c,
-                sk4_cumulationMonth__c,
-                sk4_cumulationYear__c
+            SELECT Id, sk4_family__c, sk4_cumulationMonth__c, sk4_cumulationYear__c
             FROM sk4_cumulation__c
         ]) {
             List<sk4_cumulation__c> familiesCumuls = new List<sk4_cumulation__c>();
@@ -116,20 +95,15 @@ public with sharing class sk4_CumulateTriggerHandler {
         }
 
         for (sk4_cumulation__c c : cumulations) {
-            List<sk4_cumulation__c> relatedCumuls = familyToCumulation.get(
-                c.sk4_family__c
-            );
+            List<sk4_cumulation__c> relatedCumuls = familyToCumulation.get(c.sk4_family__c);
 
             if (relatedCumuls != null) {
                 for (sk4_cumulation__c relC : relatedCumuls) {
                     if (
-                        c.sk4_cumulationMonth__c ==
-                        relC.sk4_cumulationMonth__c &&
+                        c.sk4_cumulationMonth__c == relC.sk4_cumulationMonth__c &&
                         c.sk4_cumulationYear__c == relC.sk4_cumulationYear__c
                     ) {
-                        c.addError(
-                            'You cannot perform two cumulations per month!'
-                        );
+                        c.addError('You cannot perform two cumulations per month!');
                     }
                 }
             }

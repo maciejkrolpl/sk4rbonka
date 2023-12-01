@@ -36,19 +36,25 @@ public with sharing class sk4_ScheduleBatchTest {
 
     @IsTest
     static void testInTheDay() {
-        User testUser = [SELECT Id
-                         FROM User
-                         WHERE LastName = :USER_NAME];
+        User testUser = [
+            SELECT Id
+            FROM User
+            WHERE LastName = :USER_NAME
+        ];
         System.runAs(testUser) {
             Test.startTest();
             Database.executeBatch(new sk4_ScheduleBatch());
             Test.stopTest();
         }
-        Integer cumulationNumber = [SELECT COUNT()
-                                    FROM sk4_cumulation__c];
-        Integer pocketMoneyNumber = [SELECT COUNT()
-                                     FROM sk4_transfer__c
-                                     WHERE sk4_type__c = 'PocketMoney'];
+        Integer cumulationNumber = [
+            SELECT COUNT()
+            FROM sk4_cumulation__c
+        ];
+        Integer pocketMoneyNumber = [
+            SELECT COUNT()
+            FROM sk4_transfer__c
+            WHERE sk4_type__c = 'PocketMoney'
+        ];
 
         Assert.areEqual(1, cumulationNumber);
         Assert.areEqual(3, pocketMoneyNumber);
@@ -56,11 +62,15 @@ public with sharing class sk4_ScheduleBatchTest {
 
     @IsTest
     static void testNotInTheDay() {
-        User testUser = [SELECT Id
-                         FROM User
-                         WHERE LastName = :USER_NAME];
-        sk4_family__c family = [SELECT Id, sk4_cumulationDay__C
-                                FROM sk4_family__c];
+        User testUser = [
+            SELECT Id
+            FROM User
+            WHERE LastName = :USER_NAME
+        ];
+        sk4_family__c family = [
+            SELECT Id, sk4_cumulationDay__C
+            FROM sk4_family__c
+        ];
         family.sk4_cumulationDay__c = Date.today().addDays(1).day();
         family.sk4_pocketMoneyDay__c = Date.today().addDays(1).day();
         update family;
@@ -70,11 +80,15 @@ public with sharing class sk4_ScheduleBatchTest {
             Database.executeBatch(new sk4_ScheduleBatch());
             Test.stopTest();
         }
-        Integer cumulationNumber = [SELECT COUNT()
-                                    FROM sk4_cumulation__c];
-        Integer pocketMoneyNumber = [SELECT COUNT()
-                                     FROM sk4_transfer__c
-                                     WHERE sk4_type__c = 'PocketMoney'];
+        Integer cumulationNumber = [
+            SELECT COUNT()
+            FROM sk4_cumulation__c
+        ];
+        Integer pocketMoneyNumber = [
+            SELECT COUNT()
+            FROM sk4_transfer__c
+            WHERE sk4_type__c = 'PocketMoney'
+        ];
 
         Assert.areEqual(0, cumulationNumber);
         Assert.areEqual(0, pocketMoneyNumber);
@@ -82,11 +96,15 @@ public with sharing class sk4_ScheduleBatchTest {
 
     @IsTest
     static void testInTheDayWhenDisabled() {
-        User testUser = [SELECT Id
-                         FROM User
-                         WHERE LastName = :USER_NAME];
-        sk4_family__c family = [SELECT Id, sk4_cumulationDay__C
-                                FROM sk4_family__c];
+        User testUser = [
+            SELECT Id
+            FROM User
+            WHERE LastName = :USER_NAME
+        ];
+        sk4_family__c family = [
+            SELECT Id, sk4_cumulationDay__C
+            FROM sk4_family__c
+        ];
         family.sk4_ScheduledPocketMoneyEnabled__c = false;
         family.sk4_CumulationEnabled__c = false;
         update family;
@@ -96,11 +114,15 @@ public with sharing class sk4_ScheduleBatchTest {
             Database.executeBatch(new sk4_ScheduleBatch());
             Test.stopTest();
         }
-        Integer cumulationNumber = [SELECT COUNT()
-                                    FROM sk4_cumulation__c];
-        Integer pocketMoneyNumber = [SELECT COUNT()
-                                     FROM sk4_transfer__c
-                                     WHERE sk4_type__c = 'PocketMoney'];
+        Integer cumulationNumber = [
+            SELECT COUNT()
+            FROM sk4_cumulation__c
+        ];
+        Integer pocketMoneyNumber = [
+            SELECT COUNT()
+            FROM sk4_transfer__c
+            WHERE sk4_type__c = 'PocketMoney'
+        ];
 
         Assert.areEqual(0, cumulationNumber);
         Assert.areEqual(0, pocketMoneyNumber);

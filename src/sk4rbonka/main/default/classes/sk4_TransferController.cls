@@ -17,12 +17,7 @@ public with sharing class sk4_TransferController {
         List<Wrapper> result = new List<Wrapper>();
 
         List<sk4_transfer__c> transfers = [
-            SELECT
-                Id,
-                sk4_date__c,
-                sk4_description__c,
-                sk4_type__c,
-                sk4_transferAmount__c
+            SELECT Id, sk4_date__c, sk4_description__c, sk4_type__c, sk4_transferAmount__c
             FROM sk4_transfer__c
             WHERE sk4_child__c = :childId AND sk4_type__c IN :transfersToQuery
             ORDER BY sk4_date__c ASC

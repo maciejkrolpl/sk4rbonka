@@ -24,10 +24,7 @@ public with sharing class sk4_TestDataFactory {
         ];
 
         System.runAs(u) {
-            insert new PermissionSetAssignment(
-                AssigneeId = u.Id,
-                PermissionSetId = ps.Id
-            );
+            insert new PermissionSetAssignment(AssigneeId = u.Id, PermissionSetId = ps.Id);
         }
 
         return u;
@@ -53,19 +50,13 @@ public with sharing class sk4_TestDataFactory {
         ];
 
         System.runAs(u) {
-            insert new PermissionSetAssignment(
-                AssigneeId = u.Id,
-                PermissionSetId = ps.Id
-            );
+            insert new PermissionSetAssignment(AssigneeId = u.Id, PermissionSetId = ps.Id);
         }
 
         return u;
     }
 
-    public static List<sk4_family__c> createFamilies(
-        String namePrefix,
-        Integer size
-    ) {
+    public static List<sk4_family__c> createFamilies(String namePrefix, Integer size) {
         List<sk4_family__c> families = new List<sk4_family__c>();
         for (Integer i = 1; i <= size; i++) {
             sk4_family__c family = new sk4_family__c();
@@ -76,11 +67,7 @@ public with sharing class sk4_TestDataFactory {
         return families;
     }
 
-    public static List<sk4_child__c> createChildren(
-        String namePrefix,
-        Integer size,
-        Id familyId
-    ) {
+    public static List<sk4_child__c> createChildren(String namePrefix, Integer size, Id familyId) {
         List<sk4_child__c> children = new List<sk4_child__c>();
         for (Integer i = 1; i <= size; i++) {
             sk4_child__c child = new sk4_child__c();
@@ -98,12 +85,7 @@ public with sharing class sk4_TestDataFactory {
         return parent;
     }
 
-    public static sk4_transfer__c createStandardTransfer(
-        String type,
-        Decimal amount,
-        Id childId,
-        Id parentId
-    ) {
+    public static sk4_transfer__c createStandardTransfer(String type, Decimal amount, Id childId, Id parentId) {
         sk4_transfer__c transfer = new sk4_transfer__c();
         transfer.sk4_type__c = type;
         transfer.sk4_transferAmount__c = amount;
@@ -112,10 +94,7 @@ public with sharing class sk4_TestDataFactory {
         return transfer;
     }
 
-    public static sk4_cumulation__c createCumulation(
-        Date cumulationDate,
-        Id familyId
-    ) {
+    public static sk4_cumulation__c createCumulation(Date cumulationDate, Id familyId) {
         sk4_cumulation__c cumulation = new sk4_cumulation__c();
         cumulation.sk4_cumulationDate__c = cumulationDate;
         cumulation.sk4_family__c = familyId;
