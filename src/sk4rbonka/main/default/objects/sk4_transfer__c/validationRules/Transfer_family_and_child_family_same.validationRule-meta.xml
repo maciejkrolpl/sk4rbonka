@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Transfer_family_and_child_family_same</fullName>
+    <active>true</active>
+    <errorConditionFormula>sk4_family__r.Id  &lt;&gt;  sk4_child__r.sk4_family__r.Id</errorConditionFormula>
+    <errorMessage>Transfer&apos;s family and child&apos;s family must be the same</errorMessage>
+</ValidationRule>
