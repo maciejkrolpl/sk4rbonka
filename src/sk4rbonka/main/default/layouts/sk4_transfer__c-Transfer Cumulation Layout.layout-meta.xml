@@ -30,7 +30,7 @@
                 <field>sk4_amountAfter__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>sk4_family__c</field>
             </layoutItems>
         </layoutColumns>

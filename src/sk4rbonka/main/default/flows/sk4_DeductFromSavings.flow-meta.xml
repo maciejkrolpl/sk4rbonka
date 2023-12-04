@@ -179,7 +179,7 @@
             <fieldText>Deduction amount</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <scale>0</scale>
+            <scale>2</scale>
         </fields>
         <fields>
             <name>Description</name>
@@ -199,7 +199,7 @@
             <targetReference>Get_child</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Display_Error</name>
         <label>Display Error</label>

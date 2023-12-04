@@ -25,11 +25,13 @@ public with sharing class sk4_CreateTransferRecords {
         public Id childId;
         public Id cumulationId;
         public Id parentId;
+        public Id familyId;
         public String description;
 
         public Parameters(FlowInput input) {
             this.childId = input.child.Id;
             this.parentId = input.parent.Id;
+            this.familyId = input.parent.sk4_family__c;
             if (!String.isBlank(input.description)) {
                 this.description = input.description;
             }
@@ -99,6 +101,7 @@ public with sharing class sk4_CreateTransferRecords {
         transfer.sk4_parent__c = family.sk4_defaultParent__c;
         transfer.sk4_transferAmount__c = family.sk4_defaultPocketMoneyAmount__c;
         transfer.sk4_date__c = Date.today();
+        transfer.sk4_family__c = family.Id;
         transfer.Name = getName(sk4_Const.TRANSFER_TYPE_POCKETMONEY);
         return transfer;
     }
@@ -142,6 +145,7 @@ public with sharing class sk4_CreateTransferRecords {
         transfer.Name = getName(p.type);
         transfer.sk4_cumulation__c = p.cumulationId;
         transfer.sk4_description__c = p.description;
+        transfer.sk4_family__c = p.familyId;
         return transfer;
     }
 

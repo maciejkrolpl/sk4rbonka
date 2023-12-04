@@ -126,7 +126,7 @@
             <fieldText>Amount</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <scale>0</scale>
+            <scale>2</scale>
         </fields>
         <fields>
             <name>Description</name>
