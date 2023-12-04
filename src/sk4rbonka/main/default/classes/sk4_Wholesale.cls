@@ -20,7 +20,7 @@ public with sharing class sk4_Wholesale {
     @AuraEnabled
     public static void saveNewTransfers(List<ChildWrapper> children) {
         sk4_parent__c parent = [
-            SELECT Id
+            SELECT Id, sk4_family__c
             FROM sk4_parent__c
             WHERE sk4_user__c = :UserInfo.getUserId()
         ];
@@ -32,6 +32,7 @@ public with sharing class sk4_Wholesale {
                 sk4_CreateTransferRecords.Parameters p = new sk4_CreateTransferRecords.Parameters();
                 p.type = sk4_Const.TRANSFER_TYPE_POCKETMONEY;
                 p.parentId = parent.Id;
+                p.familyId = parent.sk4_family__c;
                 p.childId = child.Id;
                 p.transferAmount = child.give;
                 transfers.add(sk4_CreateTransferRecords.createTransfer(p));

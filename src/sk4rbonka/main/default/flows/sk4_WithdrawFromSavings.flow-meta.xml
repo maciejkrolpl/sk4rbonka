@@ -180,7 +180,7 @@
             <fieldText>Withdraw amount</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <scale>0</scale>
+            <scale>2</scale>
         </fields>
         <fields>
             <name>Description_Input</name>

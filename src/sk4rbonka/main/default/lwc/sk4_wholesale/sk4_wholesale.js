@@ -81,8 +81,8 @@ export default class Sk4_wholesale extends NavigationMixin(LightningElement) {
             this.clearInputs();
             this.getAllChildren();
         } catch (e) {
-            this.popUpEvent('error', error.body.message);
-            console.error(error);
+            this.popUpEvent('error', e.body.message);
+            console.error(e);
         }
     }
 

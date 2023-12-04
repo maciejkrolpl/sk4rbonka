@@ -30,25 +30,22 @@ public with sharing class sk4_CreateTransferRecordsTest {
 
     @IsTest
     static void testCreateOtherTransferFromFlow() {
-        sk4_family__c family = [
-            SELECT
-                Id,
-                Name,
-                (
-                    SELECT Id, Name
-                    FROM children__r
-                ),
-                (
-                    SELECT Id, Name
-                    FROM parents__r
-                )
-            FROM sk4_family__c
+        sk4_parent__c parent = [
+            SELECT Id, Name, sk4_family__c
+            FROM sk4_parent__c
+            LIMIT 1
+        ];
+
+        sk4_child__c child = [
+            SELECT Id, Name
+            FROM sk4_child__c
+            WHERE sk4_family__c = :parent.sk4_family__c
             LIMIT 1
         ];
 
         sk4_CreateTransferRecords.FlowInput i1 = new sk4_CreateTransferRecords.FlowInput();
-        i1.child = family.Children__r[0];
-        i1.parent = family.Parents__r[0];
+        i1.child = child;
+        i1.parent = parent;
         i1.otherAmount = 10;
         i1.description = 'TestDescription';
 
@@ -68,7 +65,7 @@ public with sharing class sk4_CreateTransferRecordsTest {
             List<sk4_transfer__c> transfers = [
                 SELECT Id
                 FROM sk4_transfer__c
-                WHERE sk4_child__c = :family.Children__r[0].Id AND sk4_type__c = :sk4_Const.TRANSFER_TYPE_OTHER
+                WHERE sk4_child__c = :child.Id AND sk4_type__c = :sk4_Const.TRANSFER_TYPE_OTHER
             ];
 
             Assert.areEqual(1, transfers.size());
@@ -77,25 +74,22 @@ public with sharing class sk4_CreateTransferRecordsTest {
 
     @IsTest
     static void testCannotCreateOtherTransferWithoutDescription() {
-        sk4_family__c family = [
-            SELECT
-                Id,
-                Name,
-                (
-                    SELECT Id, Name
-                    FROM children__r
-                ),
-                (
-                    SELECT Id, Name
-                    FROM parents__r
-                )
-            FROM sk4_family__c
+        sk4_parent__c parent = [
+            SELECT Id, Name, sk4_family__c
+            FROM sk4_parent__c
+            LIMIT 1
+        ];
+
+        sk4_child__c child = [
+            SELECT Id, Name
+            FROM sk4_child__c
+            WHERE sk4_family__c = :parent.sk4_family__c
             LIMIT 1
         ];
 
         sk4_CreateTransferRecords.FlowInput i1 = new sk4_CreateTransferRecords.FlowInput();
-        i1.child = family.Children__r[0];
-        i1.parent = family.Parents__r[0];
+        i1.child = child;
+        i1.parent = parent;
         i1.otherAmount = 10;
 
         List<sk4_CreateTransferRecords.FlowInput> inputs = new List<sk4_CreateTransferRecords.FlowInput>{ i1 };
@@ -121,25 +115,22 @@ public with sharing class sk4_CreateTransferRecordsTest {
 
     @IsTest
     static void cantCreateTransferWithParentAndChildFromNotSameFamily() {
-        List<sk4_family__c> families = [
-            SELECT
-                Id,
-                Name,
-                (
-                    SELECT Id, Name
-                    FROM children__r
-                ),
-                (
-                    SELECT Id, Name
-                    FROM parents__r
-                )
-            FROM sk4_family__c
-            ORDER BY Name
+        sk4_parent__c parent = [
+            SELECT Id, Name, sk4_family__c
+            FROM sk4_parent__c
+            LIMIT 1
+        ];
+
+        sk4_child__c child = [
+            SELECT Id, Name
+            FROM sk4_child__c
+            WHERE sk4_family__c != :parent.sk4_family__c
+            LIMIT 1
         ];
 
         sk4_CreateTransferRecords.FlowInput i1 = new sk4_CreateTransferRecords.FlowInput();
-        i1.child = families[0].Children__r[0];
-        i1.parent = families[1].Parents__r[0];
+        i1.child = child;
+        i1.parent = parent;
         i1.pocketMoneyAmount = 10;
 
         List<sk4_CreateTransferRecords.FlowInput> inputs = new List<sk4_CreateTransferRecords.FlowInput>{ i1 };
@@ -165,34 +156,29 @@ public with sharing class sk4_CreateTransferRecordsTest {
 
     @IsTest
     static void testCanWithdrawMoreMoneyThanOnAccount() {
-        sk4_family__c family = [
-            SELECT
-                Id,
-                Name,
-                (
-                    SELECT Id, Name
-                    FROM children__r
-                ),
-                (
-                    SELECT Id, Name
-                    FROM parents__r
-                )
-            FROM sk4_family__c
+        sk4_CreateTransferRecords.FlowInput i1 = new sk4_CreateTransferRecords.FlowInput();
+        i1.parent = [
+            SELECT Id, Name, sk4_family__c
+            FROM sk4_parent__c
             LIMIT 1
         ];
+
+        i1.child = [
+            SELECT Id, Name
+            FROM sk4_child__c
+            WHERE sk4_family__c = :i1.parent.sk4_family__c
+            LIMIT 1
+        ];
+        i1.withdrawAmount = 15;
 
         sk4_transfer__c pocketMoney = sk4_TestDataFactory.createStandardTransfer(
             'PocketMoney',
             10,
-            family.Children__r[0].Id,
-            family.Parents__r[0].Id
+            i1.child.Id,
+            i1.parent.Id
         );
+        pocketMoney.sk4_family__c = i1.parent.sk4_family__c;
         insert pocketMoney;
-
-        sk4_CreateTransferRecords.FlowInput i1 = new sk4_CreateTransferRecords.FlowInput();
-        i1.child = family.Children__r[0];
-        i1.parent = family.Parents__r[0];
-        i1.withdrawAmount = 15;
 
         List<sk4_CreateTransferRecords.FlowInput> inputs = new List<sk4_CreateTransferRecords.FlowInput>{ i1 };
 
@@ -211,7 +197,7 @@ public with sharing class sk4_CreateTransferRecordsTest {
         sk4_child__c fetchedChild = [
             SELECT Id, sk4_balance__c
             FROM sk4_child__c
-            WHERE Id = :family.Children__r[0].Id
+            WHERE Id = :i1.child.Id
         ];
 
         Assert.areEqual(-5, fetchedChild.sk4_balance__c);
@@ -219,25 +205,20 @@ public with sharing class sk4_CreateTransferRecordsTest {
 
     @IsTest
     static void createDeductionTransferFromFlow() {
-        List<sk4_family__c> families = [
-            SELECT
-                Id,
-                Name,
-                (
-                    SELECT Id, Name
-                    FROM children__r
-                ),
-                (
-                    SELECT Id, Name
-                    FROM parents__r
-                )
-            FROM sk4_family__c
-            ORDER BY Name
+        sk4_CreateTransferRecords.FlowInput i1 = new sk4_CreateTransferRecords.FlowInput();
+        i1.parent = [
+            SELECT Id, Name, sk4_family__c
+            FROM sk4_parent__c
+            LIMIT 1
         ];
 
-        sk4_CreateTransferRecords.FlowInput i1 = new sk4_CreateTransferRecords.FlowInput();
-        i1.child = families[0].Children__r[0];
-        i1.parent = families[0].Parents__r[0];
+        i1.child = [
+            SELECT Id, Name
+            FROM sk4_child__c
+            WHERE sk4_family__c = :i1.parent.sk4_family__c
+            LIMIT 1
+        ];
+
         i1.deductionAmount = 10;
 
         List<sk4_CreateTransferRecords.FlowInput> inputs = new List<sk4_CreateTransferRecords.FlowInput>{ i1 };
