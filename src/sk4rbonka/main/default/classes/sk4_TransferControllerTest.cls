@@ -38,6 +38,9 @@ public with sharing class sk4_TransferControllerTest {
                 ),
                 sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_WITHDRAW, 10, child2.Id, parent.Id)
             };
+            for (sk4_transfer__c t : transfers) {
+                t.sk4_family__c = family.Id;
+            }
             insert transfers;
 
             sk4_cumulation__c cumulation = sk4_TestDataFactory.createCumulation(Date.today(), family.Id);

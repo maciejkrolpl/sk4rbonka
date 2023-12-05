@@ -57,6 +57,7 @@ public with sharing class sk4_CumulateTriggerHandler {
             p.childId = child.Id;
             p.transferAmount = getCumulationAmount(child);
             p.cumulationId = familyToCumulation.get(child.sk4_family__c).Id;
+            p.familyId = child.sk4_family__c;
             sk4_transfer__c transfer = sk4_CreateTransferRecords.createTransfer(p);
             transfers.add(transfer);
         }
