@@ -96,11 +96,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>sk4_transfer__c.sk4_family__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>sk4_transfer__c.sk4_parent__c</field>
         <readable>true</readable>
     </fieldPermissions>
