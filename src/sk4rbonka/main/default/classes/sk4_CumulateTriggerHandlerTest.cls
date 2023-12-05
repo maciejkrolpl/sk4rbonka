@@ -48,6 +48,7 @@ public with sharing class sk4_CumulateTriggerHandlerTest {
             children[0].Id,
             parent.Id
         );
+        t1.sk4_family__c = family.Id;
 
         sk4_transfer__c t2 = sk4_TestDataFactory.createStandardTransfer(
             POCKETMONEY_TRANSFER_TYPE,
@@ -55,6 +56,7 @@ public with sharing class sk4_CumulateTriggerHandlerTest {
             children[0].Id,
             parent.Id
         );
+        t2.sk4_family__c = family.Id;
 
         sk4_transfer__c t3 = sk4_TestDataFactory.createStandardTransfer(
             POCKETMONEY_TRANSFER_TYPE,
@@ -62,6 +64,7 @@ public with sharing class sk4_CumulateTriggerHandlerTest {
             children[1].Id,
             parent.Id
         );
+        t3.sk4_family__c = family.Id;
 
         insert new List<sk4_transfer__c>{ t1, t2, t3 };
 
@@ -110,6 +113,7 @@ public with sharing class sk4_CumulateTriggerHandlerTest {
             child.Id,
             parent.Id
         );
+        t1.sk4_family__c = family.Id;
 
         insert t1;
 
@@ -149,6 +153,7 @@ public with sharing class sk4_CumulateTriggerHandlerTest {
             children[0].Id,
             parent.Id
         );
+        t1.sk4_family__c = family.Id;
 
         sk4_transfer__c t2 = sk4_TestDataFactory.createStandardTransfer(
             POCKETMONEY_TRANSFER_TYPE,
@@ -156,6 +161,7 @@ public with sharing class sk4_CumulateTriggerHandlerTest {
             children[0].Id,
             parent.Id
         );
+        t2.sk4_family__c = family.Id;
 
         sk4_transfer__c t3 = sk4_TestDataFactory.createStandardTransfer(
             POCKETMONEY_TRANSFER_TYPE,
@@ -163,6 +169,7 @@ public with sharing class sk4_CumulateTriggerHandlerTest {
             children[1].Id,
             parent.Id
         );
+        t3.sk4_family__c = family.Id;
 
         insert new List<sk4_transfer__c>{ t1, t2, t3 };
 
