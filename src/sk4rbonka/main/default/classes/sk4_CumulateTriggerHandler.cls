@@ -16,13 +16,7 @@ public with sharing class sk4_CumulateTriggerHandler {
     }
 
     private static void deleteTransfers(Set<Id> cumulationIds) {
-        List<sk4_transfer__c> transfers = [
-            SELECT Id
-            FROM sk4_transfer__c
-            WHERE sk4_cumulation__c IN :cumulationIds
-        ];
-
-        delete transfers;
+        delete SOQL_Transfer.query().byCumulationIds(cumulationIds).toList();
     }
 
     private static void preventUpdating(List<sk4_cumulation__c> cumulations) {

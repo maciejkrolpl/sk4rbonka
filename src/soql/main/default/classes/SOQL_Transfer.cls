@@ -22,4 +22,9 @@ public inherited sharing class SOQL_Transfer extends SOQL implements SOQL.Select
         orderBy(sk4_transfer__c.sk4_date__c);
         return this;
     }
+
+    public SOQL_Transfer byCumulationIds(Set<Id> cumulationIds) {
+        whereAre(Filter.with(sk4_transfer__c.sk4_cumulation__c).isIn(cumulationIds));
+        return this;
+    }
 }
