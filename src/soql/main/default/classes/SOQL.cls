@@ -50,7 +50,13 @@ public virtual inherited sharing class SOQL implements Queryable {
         Queryable with(SObjectField field1, SObjectField field2);
         Queryable with(SObjectField field1, SObjectField field2, SObjectField field3);
         Queryable with(SObjectField field1, SObjectField field2, SObjectField field3, SObjectField field4);
-        Queryable with(SObjectField field1, SObjectField field2, SObjectField field3, SObjectField field4, SObjectField field5);
+        Queryable with(
+            SObjectField field1,
+            SObjectField field2,
+            SObjectField field3,
+            SObjectField field4,
+            SObjectField field5
+        );
         Queryable with(List<SObjectField> fields);
         Queryable with(Iterable<String> fields);
         Queryable with(String fields);
@@ -58,8 +64,21 @@ public virtual inherited sharing class SOQL implements Queryable {
         Queryable with(String relationshipName, SObjectField field);
         Queryable with(String relationshipName, SObjectField field1, SObjectField field2);
         Queryable with(String relationshipName, SObjectField field1, SObjectField field2, SObjectField field3);
-        Queryable with(String relationshipName, SObjectField field1, SObjectField field2, SObjectField field3, SObjectField field4);
-        Queryable with(String relationshipName, SObjectField field1, SObjectField field2, SObjectField field3, SObjectField field4, SObjectField field5);
+        Queryable with(
+            String relationshipName,
+            SObjectField field1,
+            SObjectField field2,
+            SObjectField field3,
+            SObjectField field4
+        );
+        Queryable with(
+            String relationshipName,
+            SObjectField field1,
+            SObjectField field2,
+            SObjectField field3,
+            SObjectField field4,
+            SObjectField field5
+        );
         Queryable with(String relationshipName, List<SObjectField> fields);
         Queryable with(SubQuery subQuery);
         // SELECT - AGGREGATE FUNCTIONS
@@ -151,7 +170,13 @@ public virtual inherited sharing class SOQL implements Queryable {
         SubQuery with(SObjectField field1, SObjectField field2);
         SubQuery with(SObjectField field1, SObjectField field2, SObjectField field3);
         SubQuery with(SObjectField field1, SObjectField field2, SObjectField field3, SObjectField field4);
-        SubQuery with(SObjectField field1, SObjectField field2, SObjectField field3, SObjectField field4, SObjectField field5);
+        SubQuery with(
+            SObjectField field1,
+            SObjectField field2,
+            SObjectField field3,
+            SObjectField field4,
+            SObjectField field5
+        );
         SubQuery with(List<SObjectField> fields);
         SubQuery with(String relationshipName, List<SObjectField> fields);
         SubQuery with(SubQuery subQuery);
@@ -298,7 +323,13 @@ public virtual inherited sharing class SOQL implements Queryable {
         return with(field1, field2, field3).with(field4);
     }
 
-    public SOQL with(SObjectField field1, SObjectField field2, SObjectField field3, SObjectField field4, SObjectField field5) {
+    public SOQL with(
+        SObjectField field1,
+        SObjectField field2,
+        SObjectField field3,
+        SObjectField field4,
+        SObjectField field5
+    ) {
         return with(field1, field2, field3, field4).with(field5);
     }
 
@@ -333,11 +364,24 @@ public virtual inherited sharing class SOQL implements Queryable {
         return with(relationshipName, new List<SObjectField>{ field1, field2, field3 });
     }
 
-    public SOQL with(String relationshipName, SObjectField field1, SObjectField field2, SObjectField field3, SObjectField field4) {
+    public SOQL with(
+        String relationshipName,
+        SObjectField field1,
+        SObjectField field2,
+        SObjectField field3,
+        SObjectField field4
+    ) {
         return with(relationshipName, new List<SObjectField>{ field1, field2, field3, field4 });
     }
 
-    public SOQL with(String relationshipName, SObjectField field1, SObjectField field2, SObjectField field3, SObjectField field4, SObjectField field5) {
+    public SOQL with(
+        String relationshipName,
+        SObjectField field1,
+        SObjectField field2,
+        SObjectField field3,
+        SObjectField field4,
+        SObjectField field5
+    ) {
         return with(relationshipName, new List<SObjectField>{ field1, field2, field3, field4, field5 });
     }
 
@@ -603,7 +647,13 @@ public virtual inherited sharing class SOQL implements Queryable {
     public Set<String> toValuesOf(SObjectField fieldToExtract) {
         // https://salesforce.stackexchange.com/questions/393308/get-a-list-of-one-column-from-a-soql-result
         builder.fields.clearAllFields(); // other fields not needed
-        return new Map<String, SObject>(with(fieldToExtract, 'Id').whereAre(Filter.with(fieldToExtract).isNotNull()).groupBy(fieldToExtract).toAggregated()).keySet();
+        return new Map<String, SObject>(
+                with(fieldToExtract, 'Id')
+                    .whereAre(Filter.with(fieldToExtract).isNotNull())
+                    .groupBy(fieldToExtract)
+                    .toAggregated()
+            )
+            .keySet();
     }
 
     public Integer toInteger() {
@@ -935,7 +985,13 @@ public virtual inherited sharing class SOQL implements Queryable {
             return with(field1, field2, field3).with(field4);
         }
 
-        public SubQuery with(SObjectField field1, SObjectField field2, SObjectField field3, SObjectField field4, SObjectField field5) {
+        public SubQuery with(
+            SObjectField field1,
+            SObjectField field2,
+            SObjectField field3,
+            SObjectField field4,
+            SObjectField field5
+        ) {
             return with(field1, field2, field3, field4).with(field5);
         }
 
@@ -1656,7 +1712,12 @@ public virtual inherited sharing class SOQL implements Queryable {
         private String buildSOQL() {
             if (preview) {
                 String soql = builder.toString();
-                System.debug(LoggingLevel.ERROR, '\n\n============ SOQL Preview ============\n' + soql + '\n=======================================\n');
+                System.debug(
+                    LoggingLevel.ERROR,
+                    '\n\n============ SOQL Preview ============\n' +
+                        soql +
+                        '\n=======================================\n'
+                );
                 return soql;
             }
 
@@ -1668,8 +1729,8 @@ public virtual inherited sharing class SOQL implements Queryable {
                 System.debug(
                     LoggingLevel.ERROR,
                     '\n\n============ SOQL Binding ============\n' +
-                    JSON.serializePretty(binder.getBindingMap()) +
-                    '\n=======================================\n'
+                        JSON.serializePretty(binder.getBindingMap()) +
+                        '\n=======================================\n'
                 );
             }
             return binder.getBindingMap();
@@ -1700,7 +1761,11 @@ public virtual inherited sharing class SOQL implements Queryable {
                 return sharingExecutor.toSObjects(buildSOQL(), buildBinding(), accessMode);
             }
 
-            return Security.stripInaccessible(accessType, sharingExecutor.toSObjects(buildSOQL(), buildBinding(), accessMode)).getRecords();
+            return Security.stripInaccessible(
+                    accessType,
+                    sharingExecutor.toSObjects(buildSOQL(), buildBinding(), accessMode)
+                )
+                .getRecords();
         }
 
         public Map<Id, SObject> toMap() {
@@ -1710,7 +1775,10 @@ public virtual inherited sharing class SOQL implements Queryable {
         }
 
         public Map<String, SObject> toMap(SObjectField keyField) {
-            Map<String, SObject> recordPerCustomKey = (Map<String, SObject>) Type.forName('Map<String, ' + ofObject + ' >').newInstance();
+            Map<String, SObject> recordPerCustomKey = (Map<String, SObject>) Type.forName(
+                    'Map<String, ' + ofObject + ' >'
+                )
+                .newInstance();
 
             for (SObject record : toList()) {
                 recordPerCustomKey.put(String.valueOf(record.get(keyField)), record);
@@ -1723,14 +1791,20 @@ public virtual inherited sharing class SOQL implements Queryable {
             Map<String, String> customValuePerCustomKey = new Map<String, String>();
 
             for (SObject record : toList()) {
-                customValuePerCustomKey.put(String.valueOf(record.get(keyField)), String.valueOf(record.get(valueField)));
+                customValuePerCustomKey.put(
+                    String.valueOf(record.get(keyField)),
+                    String.valueOf(record.get(valueField))
+                );
             }
 
             return customValuePerCustomKey;
         }
 
         public Map<String, List<SObject>> toAggregatedMap(SObjectField keyField) {
-            Map<String, List<SObject>> recordsPerCustomKey = (Map<String, List<SObject>>) Type.forName('Map<String, List<' + ofObject + ' >>').newInstance();
+            Map<String, List<SObject>> recordsPerCustomKey = (Map<String, List<SObject>>) Type.forName(
+                    'Map<String, List<' + ofObject + ' >>'
+                )
+                .newInstance();
 
             for (SObject record : toList()) {
                 String key = String.valueOf(record.get(keyField));

@@ -6,23 +6,23 @@
   },
   "salesforcedx-vscode-core.show-cli-success-msg": false,
   "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#14406d",
-    "activityBar.background": "#14406d",
+    "activityBar.activeBackground": "#00370e",
+    "activityBar.background": "#00370e",
     "activityBar.foreground": "#e7e7e7",
     "activityBar.inactiveForeground": "#e7e7e799",
-    "activityBarBadge.background": "#d7287f",
+    "activityBarBadge.background": "#7040ff",
     "activityBarBadge.foreground": "#e7e7e7",
     "commandCenter.border": "#e7e7e799",
-    "sash.hoverBorder": "#14406d",
-    "statusBar.background": "#0c2742",
+    "sash.hoverBorder": "#00370e",
+    "statusBar.background": "#000401",
     "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#14406d",
-    "statusBarItem.remoteBackground": "#0c2742",
+    "statusBarItem.hoverBackground": "#00370e",
+    "statusBarItem.remoteBackground": "#000401",
     "statusBarItem.remoteForeground": "#e7e7e7",
-    "titleBar.activeBackground": "#0c2742",
+    "titleBar.activeBackground": "#000401",
     "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.inactiveBackground": "#0c274299",
+    "titleBar.inactiveBackground": "#00040199",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#0c2742"
+  "peacock.color": "#000401"
 }

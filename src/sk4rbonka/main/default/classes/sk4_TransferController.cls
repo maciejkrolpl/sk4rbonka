@@ -1,12 +1,4 @@
 public with sharing class sk4_TransferController {
-    private static final List<String> transfersToQuery = new List<String>{
-        sk4_Const.TRANSFER_TYPE_POCKETMONEY,
-        sk4_Const.TRANSFER_TYPE_WITHDRAW,
-        sk4_Const.TRANSFER_TYPE_CUMULATION,
-        sk4_Const.TRANSFER_TYPE_OTHER,
-        sk4_Const.TRANSFER_TYPE_DEDUCTION
-    };
-
     @AuraEnabled
     public static List<String> getMinusTypes() {
         return sk4_Const.MINUS_TRANSFERS;
@@ -16,15 +8,23 @@ public with sharing class sk4_TransferController {
     public static List<Wrapper> getTransfersByChildren(Id childId) {
         List<Wrapper> result = new List<Wrapper>();
 
-        List<sk4_transfer__c> transfers = [
-            SELECT Id, sk4_date__c, sk4_description__c, sk4_type__c, sk4_transferAmount__c
-            FROM sk4_transfer__c
-            WHERE sk4_child__c = :childId AND sk4_type__c IN :transfersToQuery
-            ORDER BY sk4_date__c ASC
-        ];
+        List<sk4_transfer__c> transfers = (List<sk4_transfer__c>) SOQL_Transfer.query()
+            .byChildId(childId)
+            .byTypes(sk4_Const.transfersToQuery)
+            .fromNewest()
+            .with(
+                new List<SObjectField>{
+                    sk4_transfer__c.sk4_date__c,
+                    sk4_transfer__c.sk4_description__c,
+                    sk4_transfer__c.sk4_type__c,
+                    sk4_transfer__c.sk4_transferAmount__c
+                }
+            )
+            .mockId('sk4_TransferController')
+            .toList();
 
-        Integer l = transfers.size();
         List<Wrapper> wrappers = new List<Wrapper>();
+        Integer l = transfers.size();
 
         for (Integer i = 0; i < l; i++) {
             if (i == 0) {

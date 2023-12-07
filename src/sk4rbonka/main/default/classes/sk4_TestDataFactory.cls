@@ -94,6 +94,13 @@ public with sharing class sk4_TestDataFactory {
         return transfer;
     }
 
+    public static sk4_transfer__c createStandardTransfer(String type, Decimal amount) {
+        sk4_transfer__c transfer = new sk4_transfer__c();
+        transfer.sk4_type__c = type;
+        transfer.sk4_transferAmount__c = amount;
+        return transfer;
+    }
+
     public static sk4_cumulation__c createCumulation(Date cumulationDate, Id familyId) {
         sk4_cumulation__c cumulation = new sk4_cumulation__c();
         cumulation.sk4_cumulationDate__c = cumulationDate;

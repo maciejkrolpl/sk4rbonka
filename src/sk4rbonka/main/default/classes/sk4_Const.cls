@@ -9,6 +9,14 @@ public with sharing class sk4_Const {
     public final static String TRANSFER_RECORDTYPE_CUMULATION = 'Cumulation';
     public final static String TRANSFER_RECORDTYPE_STANDARD = 'Standard';
 
+    public static final List<String> transfersToQuery = new List<String>{
+        sk4_Const.TRANSFER_TYPE_POCKETMONEY,
+        sk4_Const.TRANSFER_TYPE_WITHDRAW,
+        sk4_Const.TRANSFER_TYPE_CUMULATION,
+        sk4_Const.TRANSFER_TYPE_OTHER,
+        sk4_Const.TRANSFER_TYPE_DEDUCTION
+    };
+
     public final static List<String> PLUS_TRANSFERS = new List<String>{
         TRANSFER_TYPE_POCKETMONEY,
         TRANSFER_RECORDTYPE_CUMULATION,
