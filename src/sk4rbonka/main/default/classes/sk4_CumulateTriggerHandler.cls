@@ -39,17 +39,19 @@ public with sharing class sk4_CumulateTriggerHandler {
             familyToCumulation.put(c.sk4_family__c, c);
         }
 
-        List<sk4_child__c> children = [
-            SELECT
-                Id,
-                sk4_balance__c,
-                sk4_family__r.sk4_cumulationPercent__c,
-                sk4_family__r.sk4_cumulationUpperTreshold__c,
-                sk4_family__r.sk4_cumulationLowerTreshold__c,
-                sk4_family__c
-            FROM sk4_child__c
-            WHERE sk4_family__c IN :familyToCumulation.keySet()
-        ];
+        List<sk4_child__c> children = SOQL_Child.query()
+            .byFamilyIds(familyToCumulation.keySet())
+            .with(sk4_child__c.sk4_balance__c, sk4_child__c.sk4_family__c)
+            .with(
+                'sk4_family__r',
+                new List<SObjectField>{
+                    sk4_family__c.sk4_cumulationPercent__c,
+                    sk4_family__c.sk4_cumulationUpperTreshold__c,
+                    sk4_family__c.sk4_cumulationLowerTreshold__c
+                }
+            )
+            .preview()
+            .toList();
 
         for (sk4_child__c child : children) {
             sk4_CreateTransferRecords.Parameters p = new sk4_CreateTransferRecords.Parameters();

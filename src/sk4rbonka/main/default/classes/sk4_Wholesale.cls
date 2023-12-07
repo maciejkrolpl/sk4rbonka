@@ -2,10 +2,13 @@ public with sharing class sk4_Wholesale {
     @AuraEnabled
     public static List<ChildWrapper> getAllChildren() {
         List<ChildWrapper> wrappers = new List<ChildWrapper>();
-        for (sk4_child__c child : [
-            SELECT Id, sk4_fullName__c, sk4_balance__c, sk4_family__r.sk4_defaultPocketMoneyAmount__c
-            FROM sk4_child__c
-        ]) {
+        for (
+            sk4_child__c child : (List<sk4_child__c>) SOQL_Child.query()
+                .with(sk4_child__c.sk4_fullName__c, sk4_child__c.sk4_balance__c)
+                .with('sk4_family__r', sk4_family__c.sk4_defaultPocketMoneyAmount__c)
+                .preview()
+                .toList()
+        ) {
             ChildWrapper cw = new ChildWrapper();
             cw.fullName = child.sk4_fullName__c;
             cw.balance = child.sk4_balance__c;
