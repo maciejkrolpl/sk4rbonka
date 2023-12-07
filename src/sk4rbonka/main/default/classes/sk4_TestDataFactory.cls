@@ -40,7 +40,7 @@ public with sharing class sk4_TestDataFactory {
             LocaleSidKey = 'en_US',
             ProfileId = p.Id,
             TimeZoneSidKey = 'America/Los_Angeles',
-            UserName = 'testuser@sk4rbon.ka'
+            UserName = lastName + '@sk4rbon.ka'
         );
         insert u;
         PermissionSet ps = [

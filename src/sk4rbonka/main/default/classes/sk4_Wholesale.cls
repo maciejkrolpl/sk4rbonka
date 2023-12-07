@@ -22,11 +22,7 @@ public with sharing class sk4_Wholesale {
 
     @AuraEnabled
     public static void saveNewTransfers(List<ChildWrapper> children) {
-        sk4_parent__c parent = [
-            SELECT Id, sk4_family__c
-            FROM sk4_parent__c
-            WHERE sk4_user__c = :UserInfo.getUserId()
-        ];
+        sk4_parent__c parent = (sk4_parent__c) SOQL_Parent.query().byCurrentUser().toObject();
 
         List<sk4_transfer__c> transfers = new List<sk4_transfer__c>();
 
