@@ -79,10 +79,7 @@ public with sharing class sk4_CumulateTriggerHandler {
     private static void checkIsCumulationInCurrentMonth(List<sk4_cumulation__c> cumulations) {
         Map<Id, List<sk4_cumulation__c>> familyToCumulation = new Map<Id, List<sk4_cumulation__c>>();
 
-        for (sk4_cumulation__c c : [
-            SELECT Id, sk4_family__c, sk4_cumulationMonth__c, sk4_cumulationYear__c
-            FROM sk4_cumulation__c
-        ]) {
+        for (sk4_cumulation__c c : (List<sk4_cumulation__c>) SOQL_Cumulation.query().toList()) {
             List<sk4_cumulation__c> familiesCumuls = new List<sk4_cumulation__c>();
             if (familyToCumulation.get(c.sk4_family__c) != null) {
                 familiesCumuls = familyToCumulation.get(c.sk4_family__c);
