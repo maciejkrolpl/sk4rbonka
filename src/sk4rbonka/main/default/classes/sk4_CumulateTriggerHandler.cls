@@ -16,13 +16,7 @@ public with sharing class sk4_CumulateTriggerHandler {
     }
 
     private static void deleteTransfers(Set<Id> cumulationIds) {
-        List<sk4_transfer__c> transfers = [
-            SELECT Id
-            FROM sk4_transfer__c
-            WHERE sk4_cumulation__c IN :cumulationIds
-        ];
-
-        delete transfers;
+        delete SOQL_Transfer.query().byCumulationIds(cumulationIds).toList();
     }
 
     private static void preventUpdating(List<sk4_cumulation__c> cumulations) {
@@ -39,17 +33,19 @@ public with sharing class sk4_CumulateTriggerHandler {
             familyToCumulation.put(c.sk4_family__c, c);
         }
 
-        List<sk4_child__c> children = [
-            SELECT
-                Id,
-                sk4_balance__c,
-                sk4_family__r.sk4_cumulationPercent__c,
-                sk4_family__r.sk4_cumulationUpperTreshold__c,
-                sk4_family__r.sk4_cumulationLowerTreshold__c,
-                sk4_family__c
-            FROM sk4_child__c
-            WHERE sk4_family__c IN :familyToCumulation.keySet()
-        ];
+        List<sk4_child__c> children = SOQL_Child.query()
+            .byFamilyIds(familyToCumulation.keySet())
+            .with(sk4_child__c.sk4_balance__c, sk4_child__c.sk4_family__c)
+            .with(
+                'sk4_family__r',
+                new List<SObjectField>{
+                    sk4_family__c.sk4_cumulationPercent__c,
+                    sk4_family__c.sk4_cumulationUpperTreshold__c,
+                    sk4_family__c.sk4_cumulationLowerTreshold__c
+                }
+            )
+            .preview()
+            .toList();
 
         for (sk4_child__c child : children) {
             sk4_CreateTransferRecords.Parameters p = new sk4_CreateTransferRecords.Parameters();
@@ -83,10 +79,7 @@ public with sharing class sk4_CumulateTriggerHandler {
     private static void checkIsCumulationInCurrentMonth(List<sk4_cumulation__c> cumulations) {
         Map<Id, List<sk4_cumulation__c>> familyToCumulation = new Map<Id, List<sk4_cumulation__c>>();
 
-        for (sk4_cumulation__c c : [
-            SELECT Id, sk4_family__c, sk4_cumulationMonth__c, sk4_cumulationYear__c
-            FROM sk4_cumulation__c
-        ]) {
+        for (sk4_cumulation__c c : (List<sk4_cumulation__c>) SOQL_Cumulation.query().toList()) {
             List<sk4_cumulation__c> familiesCumuls = new List<sk4_cumulation__c>();
             if (familyToCumulation.get(c.sk4_family__c) != null) {
                 familiesCumuls = familyToCumulation.get(c.sk4_family__c);

@@ -40,7 +40,7 @@ public with sharing class sk4_TestDataFactory {
             LocaleSidKey = 'en_US',
             ProfileId = p.Id,
             TimeZoneSidKey = 'America/Los_Angeles',
-            UserName = 'testuser@sk4rbon.ka'
+            UserName = lastName + '@sk4rbon.ka'
         );
         insert u;
         PermissionSet ps = [
@@ -91,6 +91,13 @@ public with sharing class sk4_TestDataFactory {
         transfer.sk4_transferAmount__c = amount;
         transfer.sk4_child__c = childId;
         transfer.sk4_parent__c = parentId;
+        return transfer;
+    }
+
+    public static sk4_transfer__c createStandardTransfer(String type, Decimal amount) {
+        sk4_transfer__c transfer = new sk4_transfer__c();
+        transfer.sk4_type__c = type;
+        transfer.sk4_transferAmount__c = amount;
         return transfer;
     }
 
