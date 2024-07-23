@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Positive_negative_amount</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+	AND(
+		OR(
+			ISPICKVAL(sk4_type__c, &apos;PocketMoney&apos;),
+			ISPICKVAL(sk4_type__c, &apos;Savings&apos;),
+			ISPICKVAL(sk4_type__c, &apos;Other&apos;),
+			ISPICKVAL(sk4_type__c, &apos;Cumulation&apos;)
+		),
+		sk4_transferAmount__c &lt; 0
+	),
+	AND(
+		OR(
+			ISPICKVAL(sk4_type__c, &apos;Withdraw&apos;),
+			ISPICKVAL(sk4_type__c, &apos;Deduction&apos;)
+		),
+		sk4_transferAmount__c &gt;= 0
+	)
+)</errorConditionFormula>
+    <errorMessage>Cumulation, Other, Savings and PocketMoney must have positive amount. Deduction and Withdraw must have negative amount.</errorMessage>
+</ValidationRule>

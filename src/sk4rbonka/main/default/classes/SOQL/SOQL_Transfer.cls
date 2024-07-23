@@ -19,7 +19,7 @@ public inherited sharing class SOQL_Transfer extends SOQL implements SOQL.Select
     }
 
     public SOQL_Transfer fromNewest() {
-        orderBy(sk4_transfer__c.sk4_date__c);
+        orderBy(sk4_transfer__c.sk4_dateTime__c);
         return this;
     }
 

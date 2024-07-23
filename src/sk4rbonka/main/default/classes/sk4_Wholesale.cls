@@ -4,14 +4,14 @@ public with sharing class sk4_Wholesale {
         List<ChildWrapper> wrappers = new List<ChildWrapper>();
         for (
             sk4_child__c child : (List<sk4_child__c>) SOQL_Child.query()
-                .with(sk4_child__c.sk4_fullName__c, sk4_child__c.sk4_balance__c)
+                .with(sk4_child__c.sk4_fullName__c, sk4_child__c.sk4_balance2__c)
                 .with('sk4_family__r', sk4_family__c.sk4_defaultPocketMoneyAmount__c)
                 .preview()
                 .toList()
         ) {
             ChildWrapper cw = new ChildWrapper();
             cw.fullName = child.sk4_fullName__c;
-            cw.balance = child.sk4_balance__c;
+            cw.balance = child.sk4_balance2__c;
             cw.defaultAmount = child.sk4_family__r.sk4_defaultPocketMoneyAmount__c;
             cw.id = child.Id;
             wrappers.add(cw);

@@ -109,7 +109,7 @@ public with sharing class sk4_CumulateTriggerHandlerTest {
 
         sk4_transfer__c t1 = sk4_TestDataFactory.createStandardTransfer(
             sk4_Const.TRANSFER_TYPE_WITHDRAW,
-            20,
+            -20,
             child.Id,
             parent.Id
         );

@@ -23,7 +23,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>sk4_date__c</field>
+                <field>sk4_dateTime__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
