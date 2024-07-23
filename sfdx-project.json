@@ -7,10 +7,6 @@
     {
       "path": "src/schedule",
       "default": false
-    },
-    {
-      "path": "src/soql",
-      "default": false
     }
   ],
   "name": "Sk4rbonka",
