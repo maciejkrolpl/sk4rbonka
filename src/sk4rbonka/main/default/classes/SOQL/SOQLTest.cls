@@ -13,11 +13,6 @@ private class SOQLTest {
     @SuppressWarnings('PMD.AvoidHardcodingId')
     private static final Id FAKE_ACCOUNT_ID = '0013V00000WNCwCQAX';
 
-    @TestSetup
-    static void setup() {
-        TDF_TestDataCreator.disableTriggers();
-    }
-
     @IsTest
     static void ofSObjectType() {
         // Test
