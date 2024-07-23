@@ -19,7 +19,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>sk4_balance__c</field>
+                <field>sk4_balance2__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

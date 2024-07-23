@@ -14,22 +14,12 @@
     </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
-        <field>sk4_child__c.sk4_balance__c</field>
+        <field>sk4_child__c.sk4_balance2__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>sk4_child__c.sk4_fullName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>sk4_child__c.sk4_savingsSum__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>sk4_child__c.sk4_withdrawsSum__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -90,6 +80,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>sk4_transfer__c.sk4_cumulation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>sk4_transfer__c.sk4_dateTime__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

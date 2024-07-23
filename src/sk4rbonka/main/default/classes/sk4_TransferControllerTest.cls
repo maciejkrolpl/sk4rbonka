@@ -5,9 +5,9 @@ public with sharing class sk4_TransferControllerTest {
         List<sk4_transfer__c> transfers = new List<sk4_transfer__c>{
             sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_POCKETMONEY, 20),
             sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_OTHER, 20),
-            sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_WITHDRAW, 10),
-            sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_DEDUCTION, 10),
-            sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_DEDUCTION, 10),
+            sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_WITHDRAW, -10),
+            sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_DEDUCTION, -10),
+            sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_DEDUCTION, -10),
             sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_CUMULATION, 5)
         };
 

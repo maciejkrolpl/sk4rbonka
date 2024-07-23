@@ -195,12 +195,12 @@ public with sharing class sk4_CreateTransferRecordsTest {
         }
 
         sk4_child__c fetchedChild = [
-            SELECT Id, sk4_balance__c
+            SELECT Id, sk4_balance2__c
             FROM sk4_child__c
             WHERE Id = :i1.child.Id
         ];
 
-        Assert.areEqual(-5, fetchedChild.sk4_balance__c);
+        Assert.areEqual(-5, fetchedChild.sk4_balance2__c);
     }
 
     @IsTest
@@ -233,13 +233,13 @@ public with sharing class sk4_CreateTransferRecordsTest {
             sk4_CreateTransferRecords.createRecords(inputs);
         }
 
-        List<sk4_transfer__c> savingsTransfers = [
+        List<sk4_transfer__c> deductionTransfers = [
             SELECT Id, sk4_type__c, sk4_transferAmount__c
             FROM sk4_transfer__c
             WHERE sk4_type__c = 'Deduction'
         ];
 
-        Assert.areEqual(1, savingsTransfers.size());
-        Assert.areEqual(10, savingsTransfers[0].sk4_transferAmount__c);
+        Assert.areEqual(1, deductionTransfers.size());
+        Assert.areEqual(-10, deductionTransfers[0].sk4_transferAmount__c);
     }
 }

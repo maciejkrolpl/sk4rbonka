@@ -1,19 +1,28 @@
 import { LightningElement, wire, api, track } from 'lwc';
 import getTransfersByChildren from '@salesforce/apex/sk4_TransferController.getTransfersByChildren';
-import getMinusTypes from '@salesforce/apex/sk4_TransferController.getMinusTypes';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class Sk4_history extends LightningElement {
     columns = [
-        { label: 'Date', fieldName: 'dt', type: 'date-local' },
+        {
+            label: 'Date',
+            fieldName: 'dt',
+            type: 'date',
+            typeAttributes: {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            }
+        },
         { label: 'Type', fieldName: 'type' },
-        { label: 'Description', fieldName: 'description', editable: true },
+        { label: 'Description', fieldName: 'description' },
         {
             label: 'Amount',
             fieldName: 'amount',
             type: 'currency',
-            cellAttributes: { class: { fieldName: 'color' } },
-            editable: true
+            cellAttributes: { class: { fieldName: 'color' } }
         },
         {
             label: 'Balance',
@@ -36,18 +45,15 @@ export default class Sk4_history extends LightningElement {
     }
 
     async connectedCallback() {
-        const getMinusTypesPromise = getMinusTypes();
-        const getTransfersPromise = getTransfersByChildren({
-            childId: this.recordId
-        });
-
         try {
-            const [minusTypes, transfers] = await Promise.all([getMinusTypesPromise, getTransfersPromise]);
+            const transfers = await getTransfersByChildren({
+                childId: this.recordId
+            });
+            console.log('🚀 ~ Sk4_history ~ connectedCallback ~ transfers:', transfers);
             this.transfers = transfers
                 .map(item => ({
                     ...item,
-                    amount: minusTypes.includes(item.type) ? item.amount * -1 : item.amount,
-                    color: minusTypes.includes(item.type) ? 'slds-text-color_error' : ''
+                    color: item.amount < 0 ? 'slds-text-color_error' : ''
                 }))
                 .reverse();
         } catch (e) {

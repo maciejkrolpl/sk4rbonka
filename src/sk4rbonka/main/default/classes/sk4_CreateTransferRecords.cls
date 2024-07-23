@@ -100,7 +100,6 @@ public with sharing class sk4_CreateTransferRecords {
         transfer.sk4_child__c = childId;
         transfer.sk4_parent__c = family.sk4_defaultParent__c;
         transfer.sk4_transferAmount__c = family.sk4_defaultPocketMoneyAmount__c;
-        transfer.sk4_date__c = Date.today();
         transfer.sk4_family__c = family.Id;
         transfer.Name = getName(sk4_Const.TRANSFER_TYPE_POCKETMONEY);
         return transfer;
@@ -122,14 +121,14 @@ public with sharing class sk4_CreateTransferRecords {
 
     private static sk4_Transfer__c createDeductionTransfer(FlowInput input) {
         Parameters p = new Parameters(input);
-        p.transferAmount = input.deductionAmount;
+        p.transferAmount = input.deductionAmount * -1;
         p.type = sk4_Const.TRANSFER_TYPE_DEDUCTION;
         return createTransfer(p);
     }
 
     private static sk4_Transfer__c createWithdrawTransfer(FlowInput input) {
         Parameters p = new Parameters(input);
-        p.transferAmount = input.withdrawAmount;
+        p.transferAmount = input.withdrawAmount * -1;
         p.type = sk4_Const.TRANSFER_TYPE_WITHDRAW;
         return createTransfer(p);
     }
@@ -141,7 +140,6 @@ public with sharing class sk4_CreateTransferRecords {
         transfer.sk4_child__c = p.childId;
         transfer.sk4_parent__c = p.parentId;
         transfer.sk4_transferAmount__c = p.transferAmount;
-        transfer.sk4_date__c = Date.today();
         transfer.Name = getName(p.type);
         transfer.sk4_cumulation__c = p.cumulationId;
         transfer.sk4_description__c = p.description;

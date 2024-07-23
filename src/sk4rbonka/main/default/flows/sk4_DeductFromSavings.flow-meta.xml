@@ -4,7 +4,7 @@
         <name>Deduct_from_savings_apex</name>
         <label>Deduct from savings apex</label>
         <locationX>176</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <actionName>sk4_CreateTransferRecords</actionName>
         <actionType>apex</actionType>
         <faultConnector>
@@ -41,7 +41,7 @@
         <name>Is_deduction_more_than_savings</name>
         <label>Is deduction more than savings</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Confirmation</targetReference>
         </defaultConnector>
@@ -53,7 +53,7 @@
                 <leftValueReference>Deduction_amount</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <elementReference>Get_child.sk4_balance__c</elementReference>
+                    <elementReference>Get_child.sk4_balance2__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -93,7 +93,7 @@
         <name>Get_child</name>
         <label>Get child</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Parent</targetReference>
@@ -114,7 +114,7 @@
         <name>Get_Parent</name>
         <label>Get Parent</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Deduct_from_savings</targetReference>
@@ -135,7 +135,7 @@
         <name>Confirmation</name>
         <label>Confirmation</label>
         <locationX>264</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -156,7 +156,7 @@
         <name>Deduct_from_savings</name>
         <label>Deduct from savings</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -204,7 +204,7 @@
         <name>Display_Error</name>
         <label>Display Error</label>
         <locationX>528</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <flowName>sk4_DisplayError</flowName>
         <inputAssignments>
             <name>Error_Message</name>
