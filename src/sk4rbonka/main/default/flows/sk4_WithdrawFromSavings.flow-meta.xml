@@ -170,7 +170,7 @@
         </fields>
         <fields>
             <name>Savings_balance</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(68, 68, 68);&quot;&gt;{!Get_child.Name} has {!Get_child.sk4_balance__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;{!Get_child.Name} has {!Get_child.sk4_balance2__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
