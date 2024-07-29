@@ -51,7 +51,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_child.sk4_balance2__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
                     <elementReference>Withdraw_amount</elementReference>
                 </rightValue>
