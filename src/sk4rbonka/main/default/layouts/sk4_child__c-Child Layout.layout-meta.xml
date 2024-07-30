@@ -108,10 +108,10 @@
     </quickActionList>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>sk4_date__c</fields>
+        <fields>sk4_dateTime__c</fields>
         <fields>sk4_transferAmount__c</fields>
         <relatedList>sk4_transfer__c.sk4_child__c</relatedList>
-        <sortField>sk4_date__c</sortField>
+        <sortField>sk4_dateTime__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

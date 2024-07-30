@@ -4,7 +4,7 @@
     <fullName>Wszystkie_moje</fullName>
     <columns>sk4_fullName__c</columns>
     <columns>sk4_family__c</columns>
-    <columns>sk4_balance__c</columns>
+    <columns>sk4_balance2__c</columns>
     <filterScope>Everything</filterScope>
     <label>Wszystkie moje</label>
 </ListView>

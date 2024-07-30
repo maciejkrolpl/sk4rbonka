@@ -13,7 +13,7 @@ public with sharing class sk4_TestDataFactory {
             LanguageLocaleKey = 'en_US',
             LocaleSidKey = 'en_US',
             ProfileId = p.Id,
-            TimeZoneSidKey = 'America/Los_Angeles',
+            TimeZoneSidKey = 'Europe/Warsaw',
             UserName = 'test@sk4rbon.ka'
         );
         insert u;
