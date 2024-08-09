@@ -1,6 +1,8 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import createTransfer from '@salesforce/apex/sk4_addWithdrawController.createTransfer';
+import { publish, MessageContext } from 'lightning/messageService';
+import HISTORY_REFRESH_CHANNEL from '@salesforce/messageChannel/HistoryRefresh__c';
 
 const BUTTONS = [
     {
@@ -21,6 +23,9 @@ export default class Sk4_addWithdrawModal extends LightningElement {
     amount;
     description;
     @api recordId;
+
+    @wire(MessageContext)
+    messageContext;
 
     set selectedAction(value) {
         this._selectedAction = value;
@@ -50,6 +55,7 @@ export default class Sk4_addWithdrawModal extends LightningElement {
                 description: this.description,
                 childId: this.recordId
             });
+            publish(this.messageContext, HISTORY_REFRESH_CHANNEL, {});
             this.handleClose();
         } catch (e) {
             console.error(e);

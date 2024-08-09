@@ -1,5 +1,7 @@
 import { LightningElement, wire, api, track } from 'lwc';
 import getTransfersByChildren from '@salesforce/apex/sk4_TransferController.getTransfersByChildren';
+import { subscribe, MessageContext } from 'lightning/messageService';
+import HISTORY_REFRESH_CHANNEL from '@salesforce/messageChannel/HistoryRefresh__c';
 export default class Sk4_history extends LightningElement {
     columns = [
         {
@@ -33,7 +35,21 @@ export default class Sk4_history extends LightningElement {
     @track transfers;
     rowOffset = 0;
 
-    async connectedCallback() {
+    @wire(MessageContext)
+    messageContext;
+
+    subscription;
+
+    subscribeToMessageChannel() {
+        this.subscription = subscribe(this.messageContext, HISTORY_REFRESH_CHANNEL, () => this.getRecords());
+    }
+
+    connectedCallback() {
+        this.subscribeToMessageChannel();
+        this.getRecords();
+    }
+
+    async getRecords() {
         try {
             const transfers = await getTransfersByChildren({
                 childId: this.recordId
