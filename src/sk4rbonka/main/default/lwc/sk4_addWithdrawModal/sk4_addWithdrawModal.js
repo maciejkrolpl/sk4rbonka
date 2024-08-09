@@ -3,29 +3,56 @@ import { CloseActionScreenEvent } from 'lightning/actions';
 import createTransfer from '@salesforce/apex/sk4_addWithdrawController.createTransfer';
 import { publish, MessageContext } from 'lightning/messageService';
 import HISTORY_REFRESH_CHANNEL from '@salesforce/messageChannel/HistoryRefresh__c';
+import { getPicklistValues, getObjectInfo } from 'lightning/uiObjectInfoApi';
 
-const BUTTONS = [
-    {
-        label: 'PocketMoney',
-        name: 'pocketMoney',
-        variant: 'brand'
-    },
-    {
-        label: 'Withdraw',
-        name: 'withdraw',
-        variant: 'neutral'
-    }
-];
+import TRANSFER_OBJECT from '@salesforce/schema/sk4_Transfer__c';
+import TYPE_FIELD from '@salesforce/schema/sk4_Transfer__c.sk4_Type__c';
+
+const TRANSFER_RT_STANDARD = 'Standard';
+const DEFAULT_BUTTON = 'PocketMoney';
+// const BUTTONS = [
+//     {
+//         label: 'PocketMoney',
+//         name: 'pocketMoney',
+//         variant: 'brand'
+//     },
+//     {
+//         label: 'Withdraw',
+//         name: 'withdraw',
+//         variant: 'neutral'
+//     }
+// ];
 
 export default class Sk4_addWithdrawModal extends LightningElement {
-    buttons = BUTTONS;
+    buttons;
     _selectedAction;
     amount;
     description;
     @api recordId;
+    standardTransferRecordTypeId;
+    transferTypes;
 
     @wire(MessageContext)
     messageContext;
+
+    @wire(getObjectInfo, { objectApiName: TRANSFER_OBJECT })
+    transferInfo({ data, error }) {
+        if (data && data.recordTypeInfos) {
+            const recordTypeInfo = Object.values(data.recordTypeInfos).find(info => info.name === TRANSFER_RT_STANDARD);
+            this.standardTransferRecordTypeId = recordTypeInfo?.recordTypeId;
+        }
+    }
+
+    @wire(getPicklistValues, { recordTypeId: '$standardTransferRecordTypeId', fieldApiName: TYPE_FIELD })
+    picklistValues({ data, error }) {
+        if (data) {
+            this.buttons = data.values.map(picklistValue => ({
+                name: picklistValue.value,
+                variant: picklistValue.value === DEFAULT_BUTTON ? 'brand' : 'neutral',
+                ...picklistValue
+            }));
+        }
+    }
 
     set selectedAction(value) {
         this._selectedAction = value;

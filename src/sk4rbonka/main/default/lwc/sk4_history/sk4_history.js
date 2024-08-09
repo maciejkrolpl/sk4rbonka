@@ -33,7 +33,6 @@ export default class Sk4_history extends LightningElement {
 
     @api recordId;
     @track transfers;
-    rowOffset = 0;
 
     @wire(MessageContext)
     messageContext;
@@ -54,7 +53,6 @@ export default class Sk4_history extends LightningElement {
             const transfers = await getTransfersByChildren({
                 childId: this.recordId
             });
-            console.log('🚀 ~ Sk4_history ~ connectedCallback ~ transfers:', transfers);
             this.transfers = transfers
                 .map(item => ({
                     ...item,
