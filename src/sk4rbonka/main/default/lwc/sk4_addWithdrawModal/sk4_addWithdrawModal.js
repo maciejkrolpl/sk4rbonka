@@ -5,6 +5,8 @@ import { publish, MessageContext } from 'lightning/messageService';
 import HISTORY_REFRESH_CHANNEL from '@salesforce/messageChannel/HistoryRefresh__c';
 import { getPicklistValues, getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import sk4_modalWide from '@salesforce/resourceUrl/sk4_modalWide';
+import { loadStyle } from 'lightning/platformResourceLoader';
 
 import TRANSFER_OBJECT from '@salesforce/schema/sk4_Transfer__c';
 import TYPE_FIELD from '@salesforce/schema/sk4_Transfer__c.sk4_Type__c';
@@ -41,6 +43,10 @@ export default class Sk4_addWithdrawModal extends LightningElement {
                 ...picklistValue
             }));
         }
+    }
+
+    renderedCallback() {
+        loadStyle(this, sk4_modalWide);
     }
 
     set selectedAction(value) {
