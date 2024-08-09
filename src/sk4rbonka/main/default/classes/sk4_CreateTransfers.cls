@@ -1,16 +1,17 @@
 public with sharing class sk4_CreateTransfers {
     private static Id getDefaultParentId(Id childId) {
-        Id parentId = [SELECT sk4_family__r.sk4_defaultParent__c
-            FROM sk4_child__c
-            WHERE Id = :childId].sk4_family__r.sk4_defaultParent__c;
-        return parentId;
+        sk4_child__c child = (sk4_child__c) SOQL_Child.query().byId(childId).preview().toObject();
+        return child.sk4_family__r.sk4_defaultParent__c;
+
+    }
+
+    private static String getRecordTypeId(String type) {
+        return sk4_Const.TYPE_TO_RT_ID.get(type);
     }
 
     public static void addWithdraw(Id childId, Decimal amount, String type, String description) {
-        System.debug('addWithdraw');
         Id parentId = (Id) SOQL_Parent.query().byCurrentUser().toValueOf(sk4_parent__c.Id);
-        System.debug(parentId);
-        sk4_parent__c parent = [SELECT Id, sk4_family__c from sk4_parent__c where id = :parentId];
+        sk4_parent__c parent = (sk4_parent__c) SOQL_Parent.query().byId(parentId).toObject();
         if (parentId == null) {
             parentId = getDefaultParentId(childId);
         }
@@ -24,11 +25,9 @@ public with sharing class sk4_CreateTransfers {
         transfer.sk4_description__c = description;
         transfer.sk4_family__c = parent.sk4_family__c;
         transfer.sk4_parent__c = parentId;
-        transfer.sk4_transferAmount__c = amount;
+        transfer.sk4_transferAmount__c = sk4_Const.MINUS_TRANSFERS.contains(type) ? amount * -1 : amount ;
         transfer.sk4_type__c = type;
-
-
-        System.debug(transfer);
+        transfer.RecordTypeId = getRecordTypeId(type);
 
         insert transfer;
 

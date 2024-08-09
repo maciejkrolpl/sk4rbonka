@@ -4,24 +4,13 @@ import createTransfer from '@salesforce/apex/sk4_addWithdrawController.createTra
 import { publish, MessageContext } from 'lightning/messageService';
 import HISTORY_REFRESH_CHANNEL from '@salesforce/messageChannel/HistoryRefresh__c';
 import { getPicklistValues, getObjectInfo } from 'lightning/uiObjectInfoApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import TRANSFER_OBJECT from '@salesforce/schema/sk4_Transfer__c';
 import TYPE_FIELD from '@salesforce/schema/sk4_Transfer__c.sk4_Type__c';
 
 const TRANSFER_RT_STANDARD = 'Standard';
 const DEFAULT_BUTTON = 'PocketMoney';
-// const BUTTONS = [
-//     {
-//         label: 'PocketMoney',
-//         name: 'pocketMoney',
-//         variant: 'brand'
-//     },
-//     {
-//         label: 'Withdraw',
-//         name: 'withdraw',
-//         variant: 'neutral'
-//     }
-// ];
 
 export default class Sk4_addWithdrawModal extends LightningElement {
     buttons;
@@ -86,6 +75,12 @@ export default class Sk4_addWithdrawModal extends LightningElement {
             this.handleClose();
         } catch (e) {
             console.error(e);
+            const evt = new ShowToastEvent({
+                title: 'Error',
+                message: 'Error adding transfer',
+                variant: 'error'
+            });
+            this.dispatchEvent(evt);
         }
     }
 
