@@ -16,9 +16,6 @@ public with sharing class sk4_CreateTransferRecords {
         public String description;
     }
 
-    public class TransferException extends Exception {
-    }
-
     public class Parameters {
         public String type;
         public Decimal transferAmount;

@@ -1,7 +1,5 @@
 import { LightningElement, wire, api, track } from 'lwc';
 import getTransfersByChildren from '@salesforce/apex/sk4_TransferController.getTransfersByChildren';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
 export default class Sk4_history extends LightningElement {
     columns = [
         {
@@ -34,15 +32,6 @@ export default class Sk4_history extends LightningElement {
     @api recordId;
     @track transfers;
     rowOffset = 0;
-
-    displayErrorToast(message) {
-        const toast = new ShowToastEvent({
-            title: 'Error',
-            variant: 'error',
-            message
-        });
-        this.dispatchEvent(toast);
-    }
 
     async connectedCallback() {
         try {

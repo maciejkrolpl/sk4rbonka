@@ -1,0 +1,21 @@
+<template>
+    <lightning-quick-action-panel header="My action" lwc:if={recordId}>
+        <lightning-button-group>
+            <template for:each={buttons} for:item="button">
+                <lightning-button
+                    label={button.label}
+                    key={button.name}
+                    onclick={handleClick}
+                    data-action={button.name}
+                    variant={button.variant}
+                ></lightning-button>
+            </template>
+        </lightning-button-group>
+        <lightning-input type="number" name="amount" label="Enter amount" data-field="amount" onchange={handleChange}></lightning-input>
+        <lightning-input type="text" name="description" label="Enter description" data-field="description" onchange={handleChange}></lightning-input>
+        <div slot="footer">
+            <lightning-button variant="neutral" label="Cancel" onclick={handleClose}></lightning-button>
+            <lightning-button variant="brand" label="Save" class="slds-m-left_x-small" onclick={handleSave}></lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+</template>

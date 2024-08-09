@@ -7,6 +7,10 @@
     {
       "path": "src/schedule",
       "default": false
+    },
+    {
+      "path": "src/rest",
+      "default": false
     }
   ],
   "name": "Sk4rbonka",
