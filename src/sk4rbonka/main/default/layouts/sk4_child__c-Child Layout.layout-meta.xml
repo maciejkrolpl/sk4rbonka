@@ -66,24 +66,9 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>sk4_child__c.Give_PocketMoney</actionName>
+            <actionName>sk4_child__c.Add_Withdraw</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>sk4_child__c.Other_Money</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>sk4_child__c.Withdraw_savings</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>2</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>sk4_child__c.Deduct</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>3</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -108,11 +93,8 @@
     </quickActionList>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>sk4_dateTime__c</fields>
         <fields>sk4_transferAmount__c</fields>
         <relatedList>sk4_transfer__c.sk4_child__c</relatedList>
-        <sortField>sk4_dateTime__c</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -120,7 +102,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7R00000iavHj</masterLabel>
+        <masterLabel>00hKN000000IxUm</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
