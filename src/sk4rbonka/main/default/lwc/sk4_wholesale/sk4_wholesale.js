@@ -1,7 +1,5 @@
 import { NavigationMixin } from 'lightning/navigation';
 import { LightningElement, track } from 'lwc';
-import getAllChildren from '@salesforce/apex/sk4_Wholesale.getAllChildren';
-import saveNewTransfers from '@salesforce/apex/sk4_Wholesale.saveNewTransfers';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class Sk4_wholesale extends NavigationMixin(LightningElement) {
@@ -22,7 +20,7 @@ export default class Sk4_wholesale extends NavigationMixin(LightningElement) {
         this.error = undefined;
 
         try {
-            const children = await getAllChildren();
+            const children = [];
             this.children = children.map(child => ({
                 ...child,
                 give: 0
@@ -76,7 +74,7 @@ export default class Sk4_wholesale extends NavigationMixin(LightningElement) {
 
     async handleSave() {
         try {
-            await saveNewTransfers({ children: this.children });
+            // await saveNewTransfers({ children: this.children });
             this.popUpEvent('success', 'Operation completed successfully.');
             this.clearInputs();
             this.getAllChildren();

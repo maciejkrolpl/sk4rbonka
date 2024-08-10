@@ -91,6 +91,7 @@ public with sharing class sk4_TestDataFactory {
         transfer.sk4_transferAmount__c = amount;
         transfer.sk4_child__c = childId;
         transfer.sk4_parent__c = parentId;
+        transfer.sk4_description__c = 'Transfer Description';
         return transfer;
     }
 
@@ -98,6 +99,7 @@ public with sharing class sk4_TestDataFactory {
         sk4_transfer__c transfer = new sk4_transfer__c();
         transfer.sk4_type__c = type;
         transfer.sk4_transferAmount__c = amount;
+        transfer.sk4_description__c = 'Transfer Description';
         return transfer;
     }
 

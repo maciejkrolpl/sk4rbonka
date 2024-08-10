@@ -28,6 +28,19 @@ public with sharing class sk4_CreateTransfers {
         return transferAmount;
     }
 
+    public static sk4_transfer__c createPocketMoneyTransfer(sk4sk4_parent__c parent, Id childId, Decimal amount) {
+        sk4_transfer__c transfer = new sk4_transfer__c();
+        transfer.sk4_type__c = sk4_Const.TRANSFER_TYPE_POCKETMONEY;
+        transfer.RecordTypeId = getRecordTypeId(transfer.sk4_type__c);
+        transfer.sk4_child__c = childId;
+        transfer.sk4_parent__c = family.sk4_defaultParent__c;
+        transfer.sk4_transferAmount__c = family.sk4_defaultPocketMoneyAmount__c;
+        transfer.sk4_family__c = family.Id;
+        transfer.Name = getName(sk4_Const.TRANSFER_TYPE_POCKETMONEY);
+        transfer.sk4_description__c = 'Pocketmoney transfer ' + DateTime.now();
+        return transfer;
+    }
+
     public static sk4_transfer__c createPocketMoneyTransfer(sk4_family__c family, Id childId) {
         sk4_transfer__c transfer = new sk4_transfer__c();
         transfer.sk4_type__c = sk4_Const.TRANSFER_TYPE_POCKETMONEY;
@@ -37,7 +50,7 @@ public with sharing class sk4_CreateTransfers {
         transfer.sk4_transferAmount__c = family.sk4_defaultPocketMoneyAmount__c;
         transfer.sk4_family__c = family.Id;
         transfer.Name = getName(sk4_Const.TRANSFER_TYPE_POCKETMONEY);
-        transfer.sk4_description__c = 'Scheduled pocketmoney transfer ' + DateTime.now();
+        transfer.sk4_description__c = 'Pocketmoney transfer ' + DateTime.now();
         return transfer;
     }
 

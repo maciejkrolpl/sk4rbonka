@@ -34,7 +34,7 @@ public with sharing class sk4_Wholesale {
                 p.familyId = parent.sk4_family__c;
                 p.childId = child.Id;
                 p.transferAmount = child.give;
-                transfers.add(sk4_CreateTransferRecords.createTransfer(p));
+                transfers.add(sk4_CreateTransfers.createPocketMoneyTransfer(p));
             }
         }
 

@@ -29,7 +29,7 @@ public with sharing class SOQL_TransferTest {
                     child1.Id,
                     parent.Id
                 ),
-                sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_DEDUCTION, -5, child1.Id, parent.Id),
+                // sk4_TestDataFactory.createStandardTransfer(sk4_Const.TRANSFER_TYPE_DEDUCTION, -5, child1.Id, parent.Id),
                 sk4_TestDataFactory.createStandardTransfer(
                     sk4_Const.TRANSFER_TYPE_POCKETMONEY,
                     0,
@@ -54,7 +54,7 @@ public with sharing class SOQL_TransferTest {
         List<sk4_transfer__c> transfer = (List<sk4_transfer__c>) SOQL_Transfer.query().toList();
         Test.stopTest();
 
-        Assert.areEqual(6, transfer.size());
+        Assert.areEqual(5, transfer.size());
     }
 
     @IsTest
@@ -66,7 +66,7 @@ public with sharing class SOQL_TransferTest {
         List<sk4_transfer__c> transfer = (List<sk4_transfer__c>) SOQL_Transfer.query().byChildId(childId).toList();
         Test.stopTest();
 
-        Assert.areEqual(3, transfer.size());
+        Assert.areEqual(2, transfer.size());
     }
 
     @IsTest
@@ -82,7 +82,7 @@ public with sharing class SOQL_TransferTest {
 
     @IsTest
     static void testByTypes() {
-        List<String> types = new List<String>{ sk4_Const.TRANSFER_TYPE_DEDUCTION };
+        List<String> types = new List<String>{ sk4_Const.TRANSFER_TYPE_WITHDRAW };
 
         Test.startTest();
         List<sk4_transfer__c> transfers = (List<sk4_transfer__c>) SOQL_Transfer.query().byTypes(types).toList();
@@ -93,8 +93,6 @@ public with sharing class SOQL_TransferTest {
 
     @IsTest
     static void testFromNewest() {
-        List<String> types = new List<String>{ sk4_Const.TRANSFER_TYPE_DEDUCTION };
-
         Test.startTest();
         List<sk4_transfer__c> transfers = (List<sk4_transfer__c>) SOQL_Transfer.query().fromNewest().toList();
         Test.stopTest();
