@@ -70,6 +70,20 @@ export default class Sk4_addWithdrawModal extends LightningElement {
     }
 
     async handleSave() {
+        const allValid = [...this.template.querySelectorAll('lightning-input')].reduce((validSoFar, inputCmp) => {
+            inputCmp.reportValidity();
+            return validSoFar && inputCmp.checkValidity();
+        }, true);
+        if (!allValid) {
+            return this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Fill in all required fields',
+                    variant: 'error'
+                })
+            );
+        }
+
         try {
             await createTransfer({
                 type: this.selectedAction,
@@ -81,12 +95,13 @@ export default class Sk4_addWithdrawModal extends LightningElement {
             this.handleClose();
         } catch (e) {
             console.error(e);
-            const evt = new ShowToastEvent({
-                title: 'Error',
-                message: 'Error adding transfer',
-                variant: 'error'
-            });
-            this.dispatchEvent(evt);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Error adding transfer',
+                    variant: 'error'
+                })
+            );
         }
     }
 
