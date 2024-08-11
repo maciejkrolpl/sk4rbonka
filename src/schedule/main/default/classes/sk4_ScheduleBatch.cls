@@ -18,7 +18,7 @@ public with sharing class sk4_ScheduleBatch implements Database.Batchable<sObjec
     private List<sk4_transfer__c> createPocketMoneyTransfers(sk4_family__c family) {
         List<sk4_transfer__c> transfers = new List<sk4_transfer__c>();
         for (sk4_child__c child : family.Children__r) {
-            transfers.add(sk4_CreateTransferRecords.createPocketMoneyTransfer(family, child.Id));
+            transfers.add(sk4_CreateTransfers.createPocketMoneyTransfer(family, child.Id));
         }
         return transfers;
     }

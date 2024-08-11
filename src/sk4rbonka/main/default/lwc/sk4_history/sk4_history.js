@@ -1,7 +1,7 @@
 import { LightningElement, wire, api, track } from 'lwc';
 import getTransfersByChildren from '@salesforce/apex/sk4_TransferController.getTransfersByChildren';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
+import { subscribe, MessageContext } from 'lightning/messageService';
+import HISTORY_REFRESH_CHANNEL from '@salesforce/messageChannel/HistoryRefresh__c';
 export default class Sk4_history extends LightningElement {
     columns = [
         {
@@ -33,23 +33,26 @@ export default class Sk4_history extends LightningElement {
 
     @api recordId;
     @track transfers;
-    rowOffset = 0;
 
-    displayErrorToast(message) {
-        const toast = new ShowToastEvent({
-            title: 'Error',
-            variant: 'error',
-            message
-        });
-        this.dispatchEvent(toast);
+    @wire(MessageContext)
+    messageContext;
+
+    subscription;
+
+    subscribeToMessageChannel() {
+        this.subscription = subscribe(this.messageContext, HISTORY_REFRESH_CHANNEL, () => this.getRecords());
     }
 
-    async connectedCallback() {
+    connectedCallback() {
+        this.subscribeToMessageChannel();
+        this.getRecords();
+    }
+
+    async getRecords() {
         try {
             const transfers = await getTransfersByChildren({
                 childId: this.recordId
             });
-            console.log('🚀 ~ Sk4_history ~ connectedCallback ~ transfers:', transfers);
             this.transfers = transfers
                 .map(item => ({
                     ...item,

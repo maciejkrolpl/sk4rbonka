@@ -48,32 +48,12 @@ public with sharing class sk4_CumulateTriggerHandler {
             .toList();
 
         for (sk4_child__c child : children) {
-            sk4_CreateTransferRecords.Parameters p = new sk4_CreateTransferRecords.Parameters();
-            p.type = sk4_Const.TRANSFER_TYPE_CUMULATION;
-            p.childId = child.Id;
-            p.transferAmount = getCumulationAmount(child);
-            p.cumulationId = familyToCumulation.get(child.sk4_family__c).Id;
-            p.familyId = child.sk4_family__c;
-            sk4_transfer__c transfer = sk4_CreateTransferRecords.createTransfer(p);
+            sk4_transfer__c transfer = sk4_CreateTransfers.createCumulationTransfer(child) ;
+            transfer.sk4_cumulation__c = familyToCumulation.get(child.sk4_family__c).Id;
             transfers.add(transfer);
         }
 
         insert transfers;
-    }
-
-    private static Decimal getCumulationAmount(sk4_child__c child) {
-        if (child.sk4_balance2__c <= 0) {
-            return 0;
-        }
-
-        Decimal transferAmount = child.sk4_balance2__c * child.sk4_family__r.sk4_cumulationPercent__c / 100;
-        if (child.sk4_family__r.sk4_cumulationLowerTreshold__c != null) {
-            transferAmount = Math.max(transferAmount, child.sk4_family__r.sk4_cumulationLowerTreshold__c);
-        }
-        if (child.sk4_family__r.sk4_cumulationUpperTreshold__c != null) {
-            transferAmount = Math.min(transferAmount, child.sk4_family__r.sk4_cumulationUpperTreshold__c);
-        }
-        return transferAmount;
     }
 
     private static void checkIsCumulationInCurrentMonth(List<sk4_cumulation__c> cumulations) {
