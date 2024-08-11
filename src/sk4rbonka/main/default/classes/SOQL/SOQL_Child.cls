@@ -5,7 +5,7 @@ public with sharing class SOQL_Child extends SOQL implements SOQL.Selector {
 
     private SOQL_Child() {
         super(sk4_child__c.SObjectType);
-        with(new List<SObjectField>{ sk4_child__c.Id, sk4_child__c.Name });
+        with(new List<SObjectField>{ sk4_child__c.Id, sk4_child__c.Name, sk4_child__c.sk4_balance2__c, sk4_child__c.sk4_fullName__c });
         with('sk4_family__r', sk4_family__c.sk4_defaultParent__c);
         systemMode();
         withSharing();

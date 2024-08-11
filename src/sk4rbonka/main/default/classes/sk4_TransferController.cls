@@ -33,6 +33,11 @@ public with sharing class sk4_TransferController {
         return wrappers;
     }
 
+    @AuraEnabled
+    public static List<sk4_child__c> getChildren() {
+        return (List<sk4_child__c>)SOQL_Child.query().toList();
+    }
+
     public class Wrapper {
         @AuraEnabled
         public Id id;
