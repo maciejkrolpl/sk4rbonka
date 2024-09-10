@@ -26,16 +26,14 @@
                 <label>Withdraw</label>
             </value>
             <value>
-                <fullName>Deduction</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Deduction</label>
-            </value>
-            <value>
                 <fullName>Other</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Other</label>
+            </value>
+            <value>
+                <fullName>Deduction</fullName>
+                <default>false</default>
+                <label>Deduction</label>
             </value>
         </valueSetDefinition>
     </valueSet>

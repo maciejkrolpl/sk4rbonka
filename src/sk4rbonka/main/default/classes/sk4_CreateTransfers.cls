@@ -2,7 +2,6 @@ public with sharing class sk4_CreateTransfers {
     private static Id getDefaultParentId(Id childId) {
         sk4_child__c child = (sk4_child__c) SOQL_Child.query().byId(childId).preview().toObject();
         return child.sk4_family__r.sk4_defaultParent__c;
-
     }
 
     private static String getRecordTypeId(String type) {
@@ -26,19 +25,6 @@ public with sharing class sk4_CreateTransfers {
             transferAmount = Math.min(transferAmount, child.sk4_family__r.sk4_cumulationUpperTreshold__c);
         }
         return transferAmount;
-    }
-
-    public static sk4_transfer__c createPocketMoneyTransfer(sk4sk4_parent__c parent, Id childId, Decimal amount) {
-        sk4_transfer__c transfer = new sk4_transfer__c();
-        transfer.sk4_type__c = sk4_Const.TRANSFER_TYPE_POCKETMONEY;
-        transfer.RecordTypeId = getRecordTypeId(transfer.sk4_type__c);
-        transfer.sk4_child__c = childId;
-        transfer.sk4_parent__c = family.sk4_defaultParent__c;
-        transfer.sk4_transferAmount__c = family.sk4_defaultPocketMoneyAmount__c;
-        transfer.sk4_family__c = family.Id;
-        transfer.Name = getName(sk4_Const.TRANSFER_TYPE_POCKETMONEY);
-        transfer.sk4_description__c = 'Pocketmoney transfer ' + DateTime.now();
-        return transfer;
     }
 
     public static sk4_transfer__c createPocketMoneyTransfer(sk4_family__c family, Id childId) {
@@ -76,10 +62,12 @@ public with sharing class sk4_CreateTransfers {
             throw new TransferException('Default Parent is not set!');
         }
 
+        Id familyId = (Id) SOQL_Child.query().byId(childId).toValueOf(sk4_child__c.sk4_family__c);
+
         sk4_Transfer__c transfer = new sk4_transfer__c();
         transfer.sk4_child__c = childId;
         transfer.sk4_description__c = description;
-        transfer.sk4_family__c = parent.sk4_family__c;
+        transfer.sk4_family__c = familyId;
         transfer.sk4_parent__c = parentId;
         transfer.sk4_transferAmount__c = sk4_Const.MINUS_TRANSFERS.contains(type) ? amount * -1 : amount ;
         transfer.sk4_type__c = type;

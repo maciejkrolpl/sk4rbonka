@@ -45,8 +45,19 @@ public with sharing class sk4_ScheduleBatch implements Database.Batchable<sObjec
             }
         }
 
-        insert cumuls;
-        insert pocketMoneys;
+        try {
+            insert cumuls;
+        } catch (Exception ex) {
+            System.debug('Error inserting cumulations!');
+            System.debug(ex.getMessage());
+        }
+
+        try {
+            insert pocketMoneys;
+        } catch (Exception ex) {
+            System.debug('Error inserting pocket moneys!');
+            System.debug(ex.getMessage());
+        }
     }
 
     public void finish(Database.BatchableContext BC) {
