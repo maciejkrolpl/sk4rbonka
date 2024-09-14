@@ -4,10 +4,6 @@
         <application>sk4rbonka</application>
         <visible>true</visible>
     </applicationVisibilities>
-    <classAccesses>
-        <apexClass>sk4_CreateTransferRecords</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
         <field>sk4_child__c.sk4_balance2__c</field>
@@ -30,17 +26,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>sk4_family__c.sk4_CumulationEnabled__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>sk4_family__c.sk4_PocketMoneyDay__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>sk4_family__c.sk4_ScheduledPocketMoneyEnabled__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>sk4_family__c.sk4_CumulationEnabled__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -6,14 +6,6 @@
     <picklistValues>
         <picklist>sk4_type__c</picklist>
         <values>
-            <fullName>Deduction</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>PocketMoney</fullName>
             <default>false</default>
         </values>
