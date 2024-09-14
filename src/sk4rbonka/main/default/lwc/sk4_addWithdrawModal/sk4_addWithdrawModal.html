@@ -1,5 +1,5 @@
 <template>
-    <lightning-quick-action-panel header="My action" lwc:if={recordId}>
+    <lightning-quick-action-panel header={childName} lwc:if={childName}>
         <lightning-button-group lwc:if={buttons} class="slds-align_absolute-center">
             <template for:each={buttons} for:item="button">
                 <lightning-button
