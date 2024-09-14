@@ -4,10 +4,13 @@ import createTransfer from '@salesforce/apex/sk4_addWithdrawController.createTra
 import { publish, MessageContext } from 'lightning/messageService';
 import HISTORY_REFRESH_CHANNEL from '@salesforce/messageChannel/HistoryRefresh__c';
 import { getPicklistValues, getObjectInfo } from 'lightning/uiObjectInfoApi';
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import TRANSFER_OBJECT from '@salesforce/schema/sk4_Transfer__c';
 import TYPE_FIELD from '@salesforce/schema/sk4_Transfer__c.sk4_Type__c';
+
+import CHILD_NAME_FIELD from '@salesforce/schema/sk4_child__c.Name';
 
 const TRANSFER_RT_STANDARD = 'Standard';
 const DEFAULT_BUTTON = 'PocketMoney';
@@ -26,7 +29,7 @@ export default class Sk4_addWithdrawModal extends LightningElement {
 
     @wire(getObjectInfo, { objectApiName: TRANSFER_OBJECT })
     transferInfo({ data, error }) {
-        if (data && data.recordTypeInfos) {
+        if (data?.recordTypeInfos) {
             const recordTypeInfo = Object.values(data.recordTypeInfos).find(info => info.name === TRANSFER_RT_STANDARD);
             this.standardTransferRecordTypeId = recordTypeInfo?.recordTypeId;
         }
@@ -41,6 +44,13 @@ export default class Sk4_addWithdrawModal extends LightningElement {
                 ...picklistValue
             }));
         }
+    }
+
+    @wire(getRecord, { recordId: '$recordId', fields: [CHILD_NAME_FIELD] })
+    child;
+
+    get childName() {
+        return getFieldValue(this.child.data, CHILD_NAME_FIELD);
     }
 
     set selectedAction(value) {
